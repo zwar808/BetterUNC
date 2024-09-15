@@ -1,2 +1,2 @@
 # BetterUNC
-BetterUNC is an opensource library for roblox exeucotrs
+BetterUNC is an opensource library for roblox executor
