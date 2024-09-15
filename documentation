@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BetterUnc Documentation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        header {
+            background: #333;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        section {
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            border-bottom: 2px solid #333;
+            padding-bottom: 5px;
+            cursor: pointer;
+        }
+
+        pre {
+            background: #f4f4f4;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+
+        code {
+            background: #f4f4f4;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+
+        ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+
+        footer {
+            background: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>BetterUnc Documentation</h1>
+    </header>
+    
+    <main>
+        <section id="introduction">
+            <h2>Introduction</h2>
+            <p>BetterUnc is a Lua library for Roblox that offers various utility functions for interacting with Roblox services and performing common tasks.</p>
+        </section>
+
+        <section id="functions">
+            <h2>Functions</h2>
+
+            <h3>GetExecutorVersion</h3>
+            <p>Returns the version of the executor.</p>
+            <pre><code>local version = BetterUnc.GetExecutorVersion()</code></pre>
+
+            <h3>GetLibraryVersion</h3>
+            <p>Returns the version of the BetterUnc library.</p>
+            <pre><code>local version = BetterUnc.GetLibraryVersion()</code></pre>
+
+            <h3>Get</h3>
+            <p>Sends an HTTP GET request to the specified URL and returns the response.</p>
+            <pre><code>local response = BetterUnc.Get("https://example.com")</code></pre>
+
+            <h3>Post</h3>
+            <p>Sends an HTTP POST request with the given data to the specified URL.</p>
+            <pre><code>
+local data = { key = "value" }
+local response = BetterUnc.Post("https://example.com", data, "application/json")
+            </code></pre>
+
+            <h3>Put</h3>
+            <p>Sends an HTTP PUT request to update data at the specified URL.</p>
+            <pre><code>
+local data = { key = "new value" }
+local response = BetterUnc.Put("https://example.com", data, "application/json")
+            </code></pre>
+
+            <h3>Delete</h3>
+            <p>Sends an HTTP DELETE request to remove data from the specified URL.</p>
+            <pre><code>local response = BetterUnc.Delete("https://example.com")</code></pre>
+
+            <h3>Patch</h3>
+            <p>Sends an HTTP PATCH request to partially update data at the specified URL.</p>
+            <pre><code>
+local data = { key = "updated value" }
+local response = BetterUnc.Patch("https://example.com", data, "application/json")
+            </code></pre>
+
+            <h3>Head</h3>
+            <p>Sends an HTTP HEAD request to retrieve metadata from the specified URL.</p>
+            <pre><code>local response = BetterUnc.Head("https://example.com")</code></pre>
+
+            <h3>Options</h3>
+            <p>Sends an HTTP OPTIONS request to retrieve the allowed methods from the specified URL.</p>
+            <pre><code>local response = BetterUnc.Options("https://example.com")</code></pre>
+
+            <h3>Trace</h3>
+            <p>Sends an HTTP TRACE request to retrieve the request message as received by the server.</p>
+            <pre><code>local response = BetterUnc.Trace("https://example.com")</code></pre>
+
+            <h3>WebSocketConnect</h3>
+            <p>Establishes a WebSocket connection to the specified URL.</p>
+            <pre><code>local connection = BetterUnc.WebSocketConnect("wss://example.com/socket")</code></pre>
+
+            <h3>WebSocketSend</h3>
+            <p>Sends a message over the WebSocket connection.</p>
+            <pre><code>
+local message = "Hello, World!"
+local success = BetterUnc.WebSocketSend(connection, message)
+            </code></pre>
+
+            <h3>WebSocketReceive</h3>
+            <p>Receives a message from the WebSocket connection.</p>
+            <pre><code>local message = BetterUnc.WebSocketReceive(connection)</code></pre>
+
+            <h3>WebSocketClose</h3>
+            <p>Closes the WebSocket connection.</p>
+            <pre><code>local success = BetterUnc.WebSocketClose(connection)</code></pre>
+
+            <h3>GetPlayerByName</h3>
+            <p>Finds and returns a player by their name.</p>
+            <pre><code>local player = BetterUnc.GetPlayerByName("PlayerName")</code></pre>
+
+            <h3>GetAllPlayers</h3>
+            <p>Returns a list of all players in the game.</p>
+            <pre><code>local players = BetterUnc.GetAllPlayers()</code></pre>
+
+            <h3>KickPlayer</h3>
+            <p>Kicks a player from the game with a given reason.</p>
+            <pre><code>
+local player = BetterUnc.GetPlayerByName("PlayerName")
+local success = BetterUnc.KickPlayer(player, "Reason for kicking")
+            </code></pre>
+
+            <h3>ChangePlayerTeam</h3>
+            <p>Changes the team of a player to the specified team name.</p>
+            <pre><code>
+local player = BetterUnc.GetPlayerByName("PlayerName")
+BetterUnc.ChangePlayerTeam(player, "TeamName")
+            </code></pre>
+
+            <h3>SetPlayerName</h3>
+            <p>Sets a new name for the player.</p>
+            <pre><code>
+local player = BetterUnc.GetPlayerByName("PlayerName")
+local success = BetterUnc.SetPlayerName(player, "NewName")
+            </code></pre>
+
+            <h3>GetPlayerData</h3>
+            <p>Retrieves basic data about a player.</p>
+            <pre><code>local data = BetterUnc.GetPlayerData(player)</code></pre>
+
+            <h3>SetPlayerWalkSpeed</h3>
+            <p>Sets the walk speed of a player’s character.</p>
+            <pre><code>
+local player = BetterUnc.GetPlayerByName("PlayerName")
+BetterUnc.SetPlayerWalkSpeed(player, 16)
+            </code></pre>
+
+            <h3>SetPlayerJumpPower</h3>
+            <p>Sets the jump power of a player’s character.</p>
+            <pre><code>
+local player = BetterUnc.GetPlayerByName("PlayerName")
+BetterUnc.SetPlayerJumpPower(player, 50)
+            </code></pre>
+
+            <h3>SetGlobalData</h3>
+            <p>Sets global data in the DataStore.</p>
+            <pre><code>BetterUnc.SetGlobalData("key", "value")</code></pre>
+
+            <h3>GetGlobalData</h3>
+            <p>Retrieves global data from the DataStore.</p>
+            <pre><code>local value = BetterUnc.GetGlobalData("key")</code></pre>
+
+            <h3>TeleportPlayer</h3>
+            <p>Teleports a player to a specific position.</p>
+            <pre><code>
+local player = BetterUnc.GetPlayerByName("PlayerName")
+BetterUnc.TeleportPlayer(player, Vector3.new(0, 50, 0))
+            </code></pre>
+
+            <h3>PlaySound</h3>
+            <p>Plays a sound at a specific position in the workspace.</p>
+            <pre><code>
+BetterUnc.PlaySound("rbxassetid://123456789", Vector3.new(0, 50, 0))
+            </code></pre>
+
+            <h3>CreatePart</h3>
+            <p>Creates a new part with the specified size, color, and position.</p>
+            <pre><code>
+local part = BetterUnc.CreatePart(Vector3.new(4, 1, 2), Color3.fromRGB(255, 0, 0), Vector3.new(0, 10, 0))
+            </code></pre>
+
+            <h3>ChangePartColor</h3>
+            <p>Changes the color of a part.</p>
+            <pre><code>
+local part = workspace:FindFirstChild("PartName")
+BetterUnc.ChangePartColor(part, Color3.fromRGB(0, 255, 0))
+            </code></pre>
+
+            <h3>RemovePart</h3>
+            <p>Removes a part from the workspace.</p>
+            <pre><code>
+local part = workspace:FindFirstChild("PartName")
+BetterUnc.RemovePart(part)
+            </code></pre>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 BetterUnc Documentation</p>
+    </footer>
+</body>
+</html>
