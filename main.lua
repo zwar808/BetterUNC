@@ -8,8 +8,15 @@ local DataStoreService = game:GetService("DataStoreService")
 local SoundService = game:GetService("SoundService")
 local TweenService = game:GetService("TweenService")
 local PlayerGui = game:GetService("PlayerGui")
-
+local diskie = loadstring(readfile("BetterUnc/lib/Diskie.lua"))()
 local BetterUnc = {}
+if isfolder("BetterUnc") then
+
+else
+	makefolder("BetterUnc")
+	makefolder("BetterUnc/lib")
+	writefile("BetterUnc/lib/Diskie.lua", game:HttpGet("https://raw.githubusercontent.com/zwar808/BetterUNC/main/lib/Diskie.lua"))
+end
 
 function BetterUnc.GetExecutorVersion()
 	return tostring(identifyexecutor())
@@ -68,7 +75,7 @@ function BetterUnc.Patch(url, data, contentType, headers)
     end)
     return success and response or nil
 end
-quick
+
 function BetterUnc.Head(url, headers)
     local success, response = pcall(function()
         return HttpService:RequestAsync({
