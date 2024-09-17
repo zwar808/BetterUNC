@@ -9,6 +9,7 @@ local SoundService = game:GetService("SoundService")
 local TweenService = game:GetService("TweenService")
 local PlayerGui = game:GetService("PlayerGui")
 local diskie = loadstring(readfile("BetterUnc/lib/Diskie.lua"))()
+local GameName = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name
 local BetterUnc = {}
 if isfolder("BetterUnc") then
 
@@ -23,7 +24,7 @@ function BetterUnc.GetExecutorVersion()
 end
 
 function BetterUnc.GetLibraryVersion()
-	return "BetterUNC F1" -- memmory for azxss fav racing team
+	return "BetterUNC F2.1"
 end
 function BetterUnc.Get(url)
     local success, response = pcall(function()
@@ -340,4 +341,173 @@ function BetterUnc.RemoveGuiElement(player, name)
     end
 end
 
+function BetterUnc:Geticon(type1)
+	local HeaderIcons = {
+		Check = "✓",
+		ArrowRight = "▶",
+		Pound = "£",
+		Bell = "⌂",
+		ArrowLeft = "↪",
+		ArrowRightReturn = "↩",
+		ArrowDown = "↰",
+		ArrowUp = "↮",
+		ArrowUpRight = "↭",
+		ArrowRightDouble = "↨",
+		ArrowUpDouble = "↣",
+		ArrowDownDouble = "↢",
+		ArrowLeftDouble = "↜",
+		ArrowDownRight = "↟",
+		ArrowUpRightDouble = "↝",
+		Plus = "+",
+		Minus = "−",
+		Star = "★",
+		Heart = "♥",
+		Square = "■",
+		Circle = "●",
+		Diamond = "♦",
+		Cross = "✗",
+		Checkmark = "✔",
+		Exclamation = "!",
+		Question = "？",
+		Dollar = "$",
+		Percent = "%",
+		At = "@",
+		Hash = "#",
+		Ampersand = "&",
+		Tilde = "~",
+		Degree = "°",
+		Infinity = "∞",
+		RightArrow = "→",
+		LeftArrow = "←",
+		UpArrow = "↑",
+		DownArrow = "↓",
+		ForwardSlash = "/",
+		Backslash = "\\",
+		VerticalBar = "|",
+		DegreeCelsius = "℃",
+		DegreeFahrenheit = "℉",
+		Section = "§",
+		Copyright = "©",
+		Registered = "®",
+		Trademark = "™",
+		Micro = "µ",
+		Paragraph = "¶",
+		DegreeSign = "°",
+		NotEqual = "≠",
+		LessThan = "＜",
+		GreaterThan = "＞",
+		Approximate = "≈",
+		Pi = "π",
+		Sigma = "Σ",
+		Delta = "Δ",
+		Omega = "Ω",
+		Alpha = "α",
+		Beta = "β",
+		Gamma = "γ",
+		Theta = "θ",
+		Lambda = "λ",
+		Phi = "φ",
+		Psi = "ψ",
+		Chi = "χ",
+		OmegaSmall = "ω",
+		Sum = "∑",
+		Integral = "∫",
+		ForAll = "∀",
+		Exists = "∃",
+		EmptySet = "∅",
+		ElementOf = "∈",
+		NotElementOf = "∉",
+		SubsetOf = "⊂",
+		SupersetOf = "⊃",
+		Intersection = "∩",
+		Union = "∪",
+		CirclePlus = "⊕",
+		CircleMinus = "⊝",
+		CircleTimes = "⊗",
+		CircleDivide = "⊘",
+		Nabla = "∇",
+		NablaSub = "∇∘",
+		PartialDifferential = "∂",
+		Angle = "∠",
+		DegreeSymbol = "°",
+		Multiplication = "×",
+		Division = "÷",
+		Proportional = "∝",
+		SquareRoot = "√",
+		CubeRoot = "∛",
+		FourthRoot = "∜",
+		Factorial = "!",
+		Permutation = "Pn",
+		Combination = "Cn",
+		Conjunction = "∧",
+		Disjunction = "∨",
+		Negation = "¬",
+		LogicalImplication = "⇒",
+		LogicalEquivalence = "⇔",
+		Therefore = "∴",
+		Because = "∵",
+		LogicalAnd = "∧",
+		LogicalOr = "∨",
+		Not = "¬",
+		EmptySetcc = "∅",
+		ElementOfcc = "∈",
+		NotElementOfcc = "∉",
+		Subset = "⊆",
+		Superset = "⊇",
+		SubsetNotEqual = "⊈",
+		SupersetNotEqual = "⊉",
+		Approximation = "≈",
+		Asymptote = "∽",
+		IdenticalTo = "≡",
+		GreaterEqual = "≥",
+		LessEqual = "≤",
+		NotGreaterEqual = "≮",
+		NotLessEqual = "≯",
+	}
+	return HeaderIcons[type1] or "Icon not found"
+end
+
+function BetterUnc.DetailedTestRun(Callback)
+	local startTime = tick()
+	local success, result = pcall(Callback)
+	local endTime = tick()
+	local duration = (endTime - startTime) * 1000
+	local environment = (game:GetService("RunService"):IsServer() and "Server" or "Client")
+
+	if success then
+		return true, {
+			result = result,
+			duration = duration,
+			environment = environment
+		}
+	else
+		local errorDetails = {
+			message = result,
+			stackTrace = debug.traceback(),
+			duration = duration,
+			environment = environment
+		}
+		return false, errorDetails
+	end
+end
+
+function BetterUnc.UncTest()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/unified-naming-convention/NamingStandard/main/UNCCheckEnv.lua"))()
+end
+
+function BetterUnc.HttpGetLoad(string)
+	loadstring(game:HttpGet(s)
+end
+
+function BetterUnc.UnofficialDarkDex()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/AlterX404/DarkDEX-V5/main/DarkDEX-V5")()
+end
+
+function BetterUnc.DarkDex()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/SpeedSterKawaii/Dark-Dex/main/dex.lua"))()
+end
+
+function BetterUnc.GetGameName()
+	return GameName
+end
 return BetterUnc
