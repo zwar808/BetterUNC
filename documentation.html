@@ -96,6 +96,38 @@
             <p>Returns the version of the BetterUnc library.</p>
             <pre><code>local version = BetterUnc.GetLibraryVersion()</code></pre>
 
+            <h3>Geticon</h3>
+<p>Returns an icon based on the type provided.</p>
+<pre><code>local icon = BetterUnc:Geticon("Check")</code></pre>
+
+<h3>DetailedTestRun</h3>
+<p>Runs a callback function and returns detailed test results including duration and environment.</p>
+<pre><code>
+local success, result = BetterUnc.DetailedTestRun(function()
+    -- Your test code here
+end)
+</code></pre>
+
+<h3>UncTest</h3>
+<p>Loads and executes the UNCCheckEnv script.</p>
+<pre><code>BetterUnc.UncTest()</code></pre>
+
+<h3>HttpGetLoad</h3>
+<p>Loads and executes a script from a URL.</p>
+<pre><code>BetterUnc.HttpGetLoad("https://example.com/script.lua")</code></pre>
+
+<h3>UnofficialDarkDex</h3>
+<p>Loads and executes the Unofficial DarkDEX script.</p>
+<pre><code>BetterUnc.UnofficialDarkDex()</code></pre>
+
+<h3>DarkDex</h3>
+<p>Loads and executes the DarkDex script.</p>
+<pre><code>BetterUnc.DarkDex()</code></pre>
+
+    <h3>GetGameName</h3>
+    <p>Returns the name of the current game.</p>
+    <pre><code>local gameName = BetterUnc.GetGameName()</code></pre>
+
             <h3>Get</h3>
             <p>Sends an HTTP GET request to the specified URL and returns the response.</p>
             <pre><code>local response = BetterUnc.Get("https://example.com")</code></pre>
