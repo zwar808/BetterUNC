@@ -21,16 +21,6 @@ Library.PostHttp(url, data, contentType, headers)
 ```
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-[Source](https://github.com/zwar808/BetterUNC/blob/main/main.lua)
+[Source](https://github.com/zwar808/BetterUNC/blob/main/main.lua)           |
+[Documentation](https://zwar808.github.io/BetterUNC/documentation.html)
+-
