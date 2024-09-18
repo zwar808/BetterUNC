@@ -10,6 +10,7 @@ local TweenService = game:GetService("TweenService")
 local PlayerGui = game:GetService("PlayerGui")
 local GameName = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name
 local BetterUnc = {}
+local cache = {}
 if isfolder("BetterUnc") then
 	--loadstring(readfile("BetterUnc/lib/Diskie.lua"))()
 else
@@ -491,6 +492,30 @@ end
 
 function BetterUnc.rng()
 	return math.random(1, 1e10)
+end
+
+function hookfunction(targetFunction, newFunction)
+    originalFunctionStorage[targetFunction] = originalFunctionStorage[targetFunction] or targetFunction
+
+    return setmetatable({}, {
+        __call = function(_, ...)
+            return newFunction(originalFunctionStorage[targetFunction], ...)
+        end
+    })
+end
+
+local function newcclosure(f)
+    return function(...)
+        return f(...)
+    end
+end
+
+function cache_replace(obj, t_obj)
+    cache[obj] = t_obj
+end
+
+function cache_invalidate(obj)
+    cache[obj] = nil
 end
 
 return BetterUnc
