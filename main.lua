@@ -493,19 +493,19 @@ end
 
 
 function BetterUnc.UncTest()
-	loadstring(game:HttpGet("https://raw.githubusercontent.com/unified-naming-convention/NamingStandard/main/UNCCheckEnv.lua"))()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/unified-naming-convention/NamingStandard/main/UNCCheckEnv.lua"))()
 end
 
-function BetterUnc.HttpGetLoad(string)
-	loadstring(game:HttpGet(s))()
+function BetterUnc.HttpGetLoad(s)
+    loadstring(game:HttpGet(s))()
 end
 
 function BetterUnc.UnofficialDarkDex()
-	loadstring(game:HttpGet("https://raw.githubusercontent.com/AlterX404/DarkDEX-V5/main/DarkDEX-V5")()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/AlterX404/DarkDEX-V5/main/DarkDEX-V5"))()
 end
 
 function BetterUnc.DarkDex()
-	loadstring(game:HttpGet("https://raw.githubusercontent.com/SpeedSterKawaii/Dark-Dex/main/dex.lua"))()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/SpeedSterKawaii/Dark-Dex/main/dex.lua"))()
 end
 
 function BetterUnc.GetGameName()
