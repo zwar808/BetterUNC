@@ -468,9 +468,9 @@ function BetterUnc:Geticon(type1)
 end
 
 function BetterUnc.DetailedTestRun(Callback)
-	local startTime = tick()
+	local startTime = os.clock()
 	local success, result = pcall(Callback)
-	local endTime = tick()
+	local endTime = os.clock()
 	local duration = (endTime - startTime) * 1000
 	local environment = (game:GetService("RunService"):IsServer() and "Server" or "Client")
 
@@ -491,6 +491,7 @@ function BetterUnc.DetailedTestRun(Callback)
 	end
 end
 
+
 function BetterUnc.UncTest()
 	loadstring(game:HttpGet("https://raw.githubusercontent.com/unified-naming-convention/NamingStandard/main/UNCCheckEnv.lua"))()
 end
@@ -510,4 +511,9 @@ end
 function BetterUnc.GetGameName()
 	return GameName
 end
+
+function BetterUnc.rng() -- great easter egg
+  return math.random(1,10000000000)
+end
+
 return BetterUnc
