@@ -11,15 +11,23 @@ local PlayerGui = game:GetService("PlayerGui")
 local GameName = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name
 local BetterUnc = {}
 local cache = {}
+local isloaded = true
+local error = 9
 local Drawing = loadstring(game:HttpGet("https://raw.githubusercontent.com/zwar808/BetterUNC/main/lib/Drawing.lua"))()
 local Diskie = loadstring(game:HttpGet("https://raw.githubusercontent.com/zwar808/BetterUNC/main/lib/Diskie.lua"))()
 function BetterUnc.GetExecutorVersion()
 	return tostring(identifyexecutor())
 end
-
 function BetterUnc.GetLibraryVersion()
 	return "BetterUNC F2.1"
 end
+
+if isloaded == true then
+    print("BetterUnc | Status: ok")
+elseif isloaded == false or isloaded == nil then
+    error("BetterUnc | Error: Expected isloaded to be true, but it returned false/nil value")
+end
+
 function BetterUnc.Get(url)
     local success, response = pcall(function()
         return HttpService:GetAsync(url)
