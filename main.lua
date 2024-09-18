@@ -11,15 +11,7 @@ local PlayerGui = game:GetService("PlayerGui")
 local GameName = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name
 local BetterUnc = {}
 local cache = {}
-if isfolder("BetterUnc") then
-	--loadstring(readfile("BetterUnc/lib/Diskie.lua"))()
-else
-	--makefolder("BetterUnc")
-	--makefolder("BetterUnc/lib")
-	--writefile("BetterUnc/lib/Diskie.lua", game:HttpGet("https://raw.githubusercontent.com/zwar808/BetterUNC/main/lib/Diskie.lua"))
-	--writefile("BetterUnc/main.lua", game:HttpGet("https://raw.githubusercontent.com/zwar808/BetterUNC/main/main.lua"))
-end
-
+local Drawing = loadstring(game:HttpGet("https://raw.githubusercontent.com/zwar808/BetterUNC/main/lib/Drawing.luahttps://raw.githubusercontent.com/zwar808/BetterUNC/main/lib/Drawing.lua"))()
 function BetterUnc.GetExecutorVersion()
 	return tostring(identifyexecutor())
 end
