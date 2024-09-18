@@ -392,7 +392,6 @@ function BetterUnc:Geticon(type1)
 		Trademark = "™",
 		Micro = "µ",
 		Paragraph = "¶",
-		DegreeSign = "°",
 		NotEqual = "≠",
 		LessThan = "＜",
 		GreaterThan = "＞",
@@ -426,43 +425,14 @@ function BetterUnc:Geticon(type1)
 		CircleTimes = "⊗",
 		CircleDivide = "⊘",
 		Nabla = "∇",
-		NablaSub = "∇∘",
 		PartialDifferential = "∂",
 		Angle = "∠",
-		DegreeSymbol = "°",
 		Multiplication = "×",
 		Division = "÷",
 		Proportional = "∝",
 		SquareRoot = "√",
 		CubeRoot = "∛",
-		FourthRoot = "∜",
-		Factorial = "!",
-		Permutation = "Pn",
-		Combination = "Cn",
-		Conjunction = "∧",
-		Disjunction = "∨",
-		Negation = "¬",
-		LogicalImplication = "⇒",
-		LogicalEquivalence = "⇔",
-		Therefore = "∴",
-		Because = "∵",
-		LogicalAnd = "∧",
-		LogicalOr = "∨",
-		Not = "¬",
-		EmptySetcc = "∅",
-		ElementOfcc = "∈",
-		NotElementOfcc = "∉",
-		Subset = "⊆",
-		Superset = "⊇",
-		SubsetNotEqual = "⊈",
-		SupersetNotEqual = "⊉",
-		Approximation = "≈",
-		Asymptote = "∽",
-		IdenticalTo = "≡",
-		GreaterEqual = "≥",
-		LessEqual = "≤",
-		NotGreaterEqual = "≮",
-		NotLessEqual = "≯",
+		FourthRoot = "∜"
 	}
 	return HeaderIcons[type1] or "Icon not found"
 end
@@ -491,29 +461,36 @@ function BetterUnc.DetailedTestRun(Callback)
 	end
 end
 
-
 function BetterUnc.UncTest()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/unified-naming-convention/NamingStandard/main/UNCCheckEnv.lua"))()
+	pcall(function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/unified-naming-convention/NamingStandard/main/UNCCheckEnv.lua"))()
+	end)
 end
 
 function BetterUnc.HttpGetLoad(s)
-    loadstring(game:HttpGet(s))()
+	pcall(function()
+		loadstring(game:HttpGet(s))()
+	end)
 end
 
 function BetterUnc.UnofficialDarkDex()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/AlterX404/DarkDEX-V5/main/DarkDEX-V5"))()
+	pcall(function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/AlterX404/DarkDEX-V5/main/DarkDEX-V5"))()
+	end)
 end
 
 function BetterUnc.DarkDex()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/SpeedSterKawaii/Dark-Dex/main/dex.lua"))()
+	pcall(function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/SpeedSterKawaii/Dark-Dex/main/dex.lua"))()
+	end)
 end
 
 function BetterUnc.GetGameName()
-	return GameName
+	return GameName or "Unknown Game"
 end
 
-function BetterUnc.rng() -- great easter egg
-  return math.random(1,10000000000)
+function BetterUnc.rng()
+	return math.random(1, 1e10)
 end
 
 return BetterUnc
