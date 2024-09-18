@@ -11,8 +11,8 @@ local PlayerGui = game:GetService("PlayerGui")
 local GameName = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name
 local BetterUnc = {}
 local cache = {}
-local Drawing = loadstring(game:HttpGet("https://raw.githubusercontent.com/zwar808/BetterUNC/main/lib/Drawing.luahttps://raw.githubusercontent.com/zwar808/BetterUNC/main/lib/Drawing.lua"))()
-local Diskie = loadstring(game:HttpGet("https://raw.githubusercontent.com/zwar808/BetterUNC/main/lib/Drawing.luahttps://raw.githubusercontent.com/zwar808/BetterUNC/main/lib/Diskie.lua"))()
+local Drawing = loadstring(game:HttpGet("https://raw.githubusercontent.com/zwar808/BetterUNC/main/lib/Drawing.lua"))()
+local Diskie = loadstring(game:HttpGet("https://raw.githubusercontent.com/zwar808/BetterUNC/main/lib/Diskie.lua"))()
 function BetterUnc.GetExecutorVersion()
 	return tostring(identifyexecutor())
 end
