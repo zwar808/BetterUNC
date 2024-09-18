@@ -11,12 +11,12 @@ local PlayerGui = game:GetService("PlayerGui")
 local GameName = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name
 local BetterUnc = {}
 if isfolder("BetterUnc") then
-	loadstring(readfile("BetterUnc/lib/Diskie.lua"))()
+	--loadstring(readfile("BetterUnc/lib/Diskie.lua"))()
 else
-	makefolder("BetterUnc")
-	makefolder("BetterUnc/lib")
-	writefile("BetterUnc/lib/Diskie.lua", game:HttpGet("https://raw.githubusercontent.com/zwar808/BetterUNC/main/lib/Diskie.lua"))
-	writefile("BetterUnc/main.lua", game:HttpGet("https://raw.githubusercontent.com/zwar808/BetterUNC/main/main.lua"))
+	--makefolder("BetterUnc")
+	--makefolder("BetterUnc/lib")
+	--writefile("BetterUnc/lib/Diskie.lua", game:HttpGet("https://raw.githubusercontent.com/zwar808/BetterUNC/main/lib/Diskie.lua"))
+	--writefile("BetterUnc/main.lua", game:HttpGet("https://raw.githubusercontent.com/zwar808/BetterUNC/main/main.lua"))
 end
 
 function BetterUnc.GetExecutorVersion()
@@ -497,7 +497,7 @@ function BetterUnc.UncTest()
 end
 
 function BetterUnc.HttpGetLoad(string)
-	loadstring(game:HttpGet(s))
+	loadstring(game:HttpGet(s))()
 end
 
 function BetterUnc.UnofficialDarkDex()
