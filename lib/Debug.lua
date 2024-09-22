@@ -20,4 +20,9 @@ function Debug.getupvalue(func, index)
     end
 end
 
+function rfunction(t)
+    if t == "test" then
+    print("Rfunction returned true")
+    end
+end
 return Debug
