@@ -2,7 +2,7 @@ local Debug = {}
 
 function Debug.getupvalues(func)
     if type(func) ~= "function" then
-        return {}
+        error("Argument must be a function")
     end
     local upvalues = {}
     local index = 1
@@ -17,14 +17,10 @@ end
 
 function Debug.getupvalue(func, index)
     if type(func) ~= "function" then
-        return nil
+        error("Argument must be a function")
     end
     local name, value = debug.getupvalue(func, index)
-    if name then
-        return value
-    else
-        return nil
-    end
+    return value
 end
 
 return Debug
