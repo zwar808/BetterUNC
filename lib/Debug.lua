@@ -1,5 +1,9 @@
 local Debug = {}
+
 function Debug.getupvalues(func)
+    if type(func) ~= "function" then
+        return {}
+    end
     local upvalues = {}
     local index = 1
     while true do
@@ -12,6 +16,9 @@ function Debug.getupvalues(func)
 end
 
 function Debug.getupvalue(func, index)
+    if type(func) ~= "function" then
+        return nil
+    end
     local name, value = debug.getupvalue(func, index)
     if name then
         return value
@@ -20,9 +27,4 @@ function Debug.getupvalue(func, index)
     end
 end
 
-function rfunction(t)
-    if t == "test" then
-    print("Rfunction returned true")
-    end
-end
 return Debug
