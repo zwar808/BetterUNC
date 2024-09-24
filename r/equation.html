@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complex Math Equation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .container {
+            text-align: center;
+        }
+        .equation {
+            font-size: 1.5em;
+            color: #333;
+            margin: 20px;
+        }
+        .answer-box {
+            margin-top: 20px;
+        }
+        input[type="text"] {
+            padding: 10px;
+            font-size: 1em;
+            width: 300px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            background-color: #007BFF;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="equation">
+            \[
+            \left( \int_{0}^{\pi} \left( e^{\sin(x)} + \cos^2(x) \cdot \sqrt[3]{x} \right) \, dx + \sum_{n=1}^{\infty} \frac{(-1)^{n+1}}{n^3} + \sqrt{16} \cdot \frac{\Gamma\left(4\right)}{2^2} - \left| \log\left( \frac{1}{e^2} \right) \right| \right) = ?
+            \]
+        </div>
+        <div class="answer-box">
+            <label for="answer">What’s the answer?</label><br>
+            <input type="text" id="answer" name="answer" placeholder="Enter your answer here">
+            <button type="button" onclick="checkAnswer()">Submit</button>
+        </div>
+    </div>
+    <script>
+        function checkAnswer() {
+            const answer = document.getElementById('answer').value;
+            const correctAnswer = 17;
+            if (Number(answer) === correctAnswer) {
+                alert('Correct! The answer is indeed ' + correctAnswer + '.');
+            } else {
+                alert('Incorrect. Try again.');
+            }
+        }
+    </script>
+</body>
+</html>
