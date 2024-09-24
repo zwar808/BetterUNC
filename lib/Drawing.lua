@@ -11,13 +11,33 @@ function Drawing.new(objectType)
         object.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
         object.BorderSizePixel = 0
         local corner = Instance.new("UICorner")
-        corner.CornerRadius = UDim.new(0.5, 0)
+        corner.CornerRadius = UDim.new(8, 8)
         corner.Parent = object
     elseif objectType == "Text" then
         object = Instance.new("TextLabel")
         object.BackgroundTransparency = 1
         object.BorderSizePixel = 0
         object.TextColor3 = Color3.fromRGB(255, 255, 255)
+    elseif objectType == "Line" then
+        object = Instance.new("Frame")
+        object.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+        object.BorderSizePixel = 0
+    elseif objectType == "Triangle" then
+        object = Instance.new("ImageLabel")
+        object.Image = "rbxassetid://1114469371"
+        object.BackgroundTransparency = 1
+    elseif objectType == "Hexagon" then
+        object = Instance.new("ImageLabel")
+        object.Image = "rbxassetid://2718828198"
+        object.BackgroundTransparency = 1
+    elseif objectType == "Ellipse" then
+        object = Instance.new("ImageLabel")
+        object.Image = "rbxassetid://4292970420"
+        object.BackgroundTransparency = 1
+    elseif objectType == "Pentagon" then
+        object = Instance.new("ImageLabel")
+        object.Image = "rbxassetid://4975806418"
+        object.BackgroundTransparency = 1
     end
     return object
 end
@@ -35,6 +55,8 @@ function Drawing.setColor(object, color)
         object.BackgroundColor3 = color
     elseif object:IsA("TextLabel") then
         object.TextColor3 = color
+    elseif object:IsA("ImageLabel") then
+        object.ImageColor3 = color
     end
 end
 
