@@ -1,24 +1,28 @@
 local modules = {}
 
-local function loadModule(moduleName)
-    local module = game:GetService("ReplicatedStorage"):FindFirstChild(moduleName)
+local function loadModule(modulePath)
+    local module = script:FindFirstChild(modulePath)
     if module and module:IsA("ModuleScript") then
         local moduleFunction, err = loadstring(module.Source)
-        if moduleFunction then
-            return moduleFunction()
+        if not moduleFunction then
+            error("Failed to compile module script: " .. (err or "Unknown error"))
+        end
+        local success, result = pcall(moduleFunction)
+        if success then
+            return result
         else
-            error("Failed to load module function: " .. (err or "Unknown error"))
+            error("Failed to execute module function: " .. result)
         end
     else
-        error("Module not found or invalid: " .. moduleName)
+        error("Module not found or invalid: " .. modulePath)
     end
 end
 
-local function require(moduleName)
-    if not modules[moduleName] then
-        modules[moduleName] = loadModule(moduleName)
+local function require(modulePath)
+    if not modules[modulePath] then
+        modules[modulePath] = loadModule(modulePath)
     end
-    return modules[moduleName]
+    return modules[modulePath]
 end
 
 return require
