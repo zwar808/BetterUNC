@@ -23,4 +23,15 @@ function Debug.getupvalue(func, index)
     return value
 end
 
+function Debug.requireUpvalue(path, functionName, upvalueIndex)
+    local module = require(path)
+    local func = module[functionName]
+
+    if not func or type(func) ~= "function" then
+        error("The function " .. tostring(functionName) .. " is not valid in the required module")
+    end
+
+    return Debug.getupvalue(func, upvalueIndex)
+end
+
 return Debug
