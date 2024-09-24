@@ -1,31 +1,31 @@
-local Debug = {}
+local debug = {}
 
-function Debug.getUpvalues(func, index)
+local upvaluesRegistry = {}
+
+function debug.setupupvalues(func, upvalues)
     if type(func) ~= "function" then
-        error("Argument must be a function")
+        error("argument must be a function")
     end
-    if index then
-        return debug.getupvalue(func, index)
-    else
-        local upvalues = {}
-        local i = 1
-        while true do
-            local name, value = debug.getupvalue(func, i)
-            if not name then break end
-            upvalues[name] = value
-            i = i + 1
-        end
-        return upvalues
-    end
+    upvaluesRegistry[func] = upvalues
 end
 
-function Debug.requireUpvalue(modulePath, functionName, upvalueIndex)
-    local module = require(modulePath)
-    local func = module[functionName]
+function debug.getupvalues(func)
+    if type(func) ~= "function" then
+        error("argument must be a function")
+    end
+    return upvaluesRegistry[func] or {}
+end
+
+function debug.getupvalue(modulepath, funcname, index)
+    local module = require(modulepath)
+    local func = module[funcname]
+
     if not func or type(func) ~= "function" then
-        error("The function " .. tostring(functionName) .. " is not valid in the required module")
+        error("the function " .. tostring(funcname) .. " is not valid in the required module")
     end
-    return Debug.getUpvalues(func, upvalueIndex)
+
+    local upvalues = debug.getupvalues(func)
+    return upvalues[index]
 end
 
-return Debug
+return debug
