@@ -2,7 +2,7 @@ local debug = {}
 
 local upvaluesRegistry = {}
 
-function debug.setupupvalues(func, upvalues)
+function debug.setupvalues(func, upvalues)
     if type(func) ~= "function" then
         error("Argument must be a function")
     end
@@ -17,9 +17,12 @@ function debug.getupvalues(func)
 end
 
 function debug.getupvalue(modulePath, funcName, index)
-    local module = require(modulePath)
-    local func = module[funcName]
+    local status, module = pcall(require, modulePath)
+    if not status then
+        error("Failed to require module: " .. tostring(modulePath))
+    end
 
+    local func = module[funcName]
     if not func or type(func) ~= "function" then
         error("The function " .. tostring(funcName) .. " is not valid in the required module")
     end
@@ -28,7 +31,7 @@ function debug.getupvalue(modulePath, funcName, index)
     if index and index > 0 and index <= #upvalues then
         return upvalues[index]
     end
-    error("Invalid index")
+    error("Invalid index or upvalue does not exist")
 end
 
 return debug
