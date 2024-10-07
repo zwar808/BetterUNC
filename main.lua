@@ -519,4 +519,9 @@ function cache_invalidate(obj)
     cache[obj] = nil
 end
 
+function BetterUnc:fish(x)
+	local find = {}
+	local x2 = x+x+x+x+x+x^x/x
+	return x2
+end
 return BetterUnc
