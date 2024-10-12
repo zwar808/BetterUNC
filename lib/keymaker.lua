@@ -12,17 +12,11 @@ local title2 = Instance.new("TextLabel")
 local TextBox = Instance.new("TextBox")
 local UICorner_2 = Instance.new("UICorner")
 local title3 = Instance.new("TextLabel")
-do
-	local existgui = game:WaitForChild("CoreGui"):WaitForChild("CleanGui") or game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("CleanGui")
-	if existgui and not _G.Exist then
-		_G.Exist = true
-		existgui:Destroy()
-	end
-end
+
 --Properties:
 function lib:Createkeysys(key, callback)
 CleanGui.Name = "CleanGui"
-CleanGui.Parent = game:WaitForChild("CoreGui") or game:GetService("Players").LocalPlayer.PlayerGui
+CleanGui.Parent = game:GetService("Players").LocalPlayer.PlayerGui
 CleanGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 CleanGui.IgnoreGuiInset = true
 
