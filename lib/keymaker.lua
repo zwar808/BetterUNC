@@ -2,7 +2,7 @@
 -- Version: 3.2
 
 -- Instances:
-local lib = {}
+
 local CleanGui = Instance.new("ScreenGui")
 local BlurDarkThemedFrame = Instance.new("Frame")
 local UICorner = Instance.new("UICorner")
@@ -12,13 +12,12 @@ local title2 = Instance.new("TextLabel")
 local TextBox = Instance.new("TextBox")
 local UICorner_2 = Instance.new("UICorner")
 local title3 = Instance.new("TextLabel")
-
+local lib = {}
 --Properties:
-function lib:Createkeysys(ekey)
+function lib.c(k,c)
 CleanGui.Name = "CleanGui"
-CleanGui.Parent = game:GetService("Players").LocalPlayer.PlayerGui
+CleanGui.Parent = game.CoreGui
 CleanGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-CleanGui.IgnoreGuiInset = true
 
 BlurDarkThemedFrame.Name = "BlurDarkThemedFrame"
 BlurDarkThemedFrame.Parent = CleanGui
@@ -26,7 +25,7 @@ BlurDarkThemedFrame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
 BlurDarkThemedFrame.BackgroundTransparency = 0.450
 BlurDarkThemedFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
 BlurDarkThemedFrame.BorderSizePixel = 0
-BlurDarkThemedFrame.Position = UDim2.new(0.360255063, 0, 0.413223147, 0)
+BlurDarkThemedFrame.Position = UDim2.new(0.402902126, 0, 0.413223147, 0)
 BlurDarkThemedFrame.Size = UDim2.new(0, 263, 0, 105)
 
 UICorner.Parent = BlurDarkThemedFrame
@@ -107,304 +106,174 @@ title3.TextWrapped = true
 
 -- Scripts:
 
-local function HYJBO_fake_script() -- BlurDarkThemedFrame.BlurCreator 
+local function KBZQD_fake_script() -- BlurDarkThemedFrame.BlurCreator 
 	local script = Instance.new('LocalScript', BlurDarkThemedFrame)
 
 	_=[[
-	
-	⣿⣿⣿⣿⡿⠟⠛⠋⠉⠉⠉⠉⠉⠛⠛⠻⠿⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-	⣿⣿⠟⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠀⠈⠙⠾⣿⣾⣿⣾⣿⣾⣿⣾⣿
-	⠋⡁⠀⠀⠀⠀⠀⢀⠔⠁⠀⠀⢀⠠⠐⠈⠁⠀⠀⠁⠀⠈⠻⢾⣿⣾⣿⣾⣟⣿
-	⠊⠀⠀⠀⠀⢀⠔⠃⠀⠀⠠⠈⠁⠀⠀⠀⠀⠀⠀⠆⠀⠀⠄⠀⠙⣾⣷⣿⢿⣿
-	⠀⠀⠀⠀⡠⠉⠀⠀⠀⠀⠠⢰⢀⠀⠀⠀⠀⠀⠀⢰⠀⠀⠈⡀⠀⠈⢿⣟⣿⣿
-	⠀⠀⢀⡜⣐⠃⠀⠀⠀⣠⠁⡄⠰⠀⠀⠀⠀⠀⠀⠐⠀⠀⠀⠰⠀⠀⠈⢿⣿⣿
-	⠀⢠⠆⢠⡃⠀⠀⠀⣔⠆⡘⡇⢘⠀⠀⠀⠀⠀⠀⠈⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿
-	⢀⡆⠀⡼⢣⠀⢀⠌⢸⢠⠇⡇⢘⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⣿
-	⣼⣃⠀⠁⢸⢀⠎⠀⢸⠎⠀⢸⢸⡄⠀⠀⠀⠀⠀⠂⢀⠀⠀⠀⠀⠀⠀⠀⠀⣿
-	⠃⡏⠟⣷⣤⠁⠀⠀⠸⠀⠀⡾⢀⢇⠀⠀⠀⠀⠀⠄⠸⠀⠀⠀⠀⠄⠀⠀⠀⣿
-	⠀⠀⣀⣿⣿⣿⢦⠀⠀⠀⠀⡧⠋⠘⡄⠀⠀⠀⠀⡇⢸⠀⠀⠠⡘⠀⠀⠀⢠⣿
-	⠈⠀⢿⢗⡻⠃⠀⠀⠀⠀⠀⠀⠀⠀⠱⡀⠀⠀⢰⠁⡇⠀⠀⢨⠃⡄⢀⠀⣸⣿
-	⠀⠀⠀⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣱⠀⠀⡎⠸⠁⠀⢀⠞⡸⠀⡜⢠⣿⣿
-	⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣺⣿⣧⢰⣧⡁⡄⠀⡞⠰⠁⡸⣠⣿⣿⣿
-	⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⡿⠏⣿⠟⢁⠾⢛⣧⢼⠁⠀⠀⢰⣿⡿⣷⣿
-	⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠉⠡⠄⠀⡠⣚⡷⠊⠀⠀⠀⣿⡿⣿⡿⣿
-	⡀⠀⠀⠀⠀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡠⠊⠁⢸⠁⠀⠀⠀⢰⣿⣿⡿⣿⣿
-	⠱⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡠⠊⠀⠀⠀⡞⠀⠀⠀⠀⢸⣿⣷⣿⣿⣿
-	⠀⠙⢦⣀⠀⠀⠀⠀⠀⢀⣀⣠⠖⠁⠀⠀⠀⠀⠀⡇⠀⠀⠀⠀⣸⣿⣾⡿⣷⣿
-	⠀⠀⠀⠀⠉⠉⣩⡞⠉⠁⠀⢸⡄⠀⠀⠀⠀⠀⢰⠇⠀⠀⠀⠀⣿⣿⣷⣿⣿⣿
-	⡆⠀⠀⣀⡠⠞⠁⣧⢤⣀⣀⣀⡇⠀⠀⠀⠀⠀⣸⠀⠀⠀⠀⠀⣿⣷⣿⣷⣿⣿
-	⣿⣷⠊⠁⠀⠀⡰⠁⠀⠀⠀⠀⣹⠶⢦⡀⠀⠀⡇⠀⠀⠀⠀⠀⢸⣿⣷⣿⣷⣿
-	⣿⢿⠀⠀⠀⡔⠁⠀⠀⠀⠀⠀⠀⠀⠀⠈⠳⡄⡇⠀⠀⠀⠀⠀⠈⣿⣾⣷⣿⣿
-	⠋⠈⠀⢀⠜⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡀⠀⠈⣧⠀⠀⠀⠀⠀⠀⠻⣿⣽⣾⣿
-	⢀⡄⡠⠊⠀⠀⠀⠀⠀⠀⠀⠀⠀⡀⠁⠀⠀⠀⣸⠀⠀⠀⠀⠀⠀⠀⣿⣿⣻⣿
-	⣿⠋⠀⠀⠀⠀⠀⠀⠀⠀⢰⠀⠐⠀⠀⠀⠀⣀⡿⠀⠀⠀⠀⠀⠀⠀⢹⣿⣻⣿
-	⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡼⠀⠀⠀⠀⠀⢀⣃⡇⠀⠲⡀⠀⠀⠀⠀⠈⣿⡿⣿
-	⣀⠤⠤⠤⡀⠀⠀⠀⠀⡴⠃⠀⠀⠀⠀⠀⢬⠞⡇⠀⠀⠇⠀⠀⠀⠀⠀⣿⣿⣿
-	⡁⢀⠀⠀⡇⠀⠀⠀⡼⠁⠀⠀⠀⠀⠀⣸⠁⠀⠇⠀⠀⡇⠀⠀⠀⠀⠀⣿⣿⣿
-	⠔⠃⠀⠀⡇⠀⠀⡼⠁⠀⠀⠀⠀⠀⢀⡇⠀⠀⡃⠀⠀⠙⢄⠀⠀⠀⠀⣿⣷⣿
-	⠒⠊⠀⠀⢸⠀⣸⠃⠀⠀⠀⠀⠀⠀⡞⠀⠀⠀⢅⠀⠀⡂⠸⡄⠀⠀⠀⣿⣟⣿
-	⠓⠀⠉⠀⢸⣰⠃⠀⠀⠀⠀⠀⠀⡜⡆⠀⠀⠀⢸⠀⠀⡇⢀⠇⠀⠀⠀⣿⣿⣿
-	⠉⠁⠀⢠⠞⠀⠀⠀⠀⠀⠀⠀⣰⠁⡇⠀⠀⠀⡇⠀⠀⡇⢸⠀⠀⠀⠀⣿⣷⣿
-	⡀⠀⢀⢿⣥⡤⠤⠤⠤⣀⣀⢠⠇⠀⢸⠀⠀⢰⠁⠀⢨⠀⢸⠀⠀⠀⠀⣿⣟⣿
-	
-	Hey There!
-	Don't ask why I'm here.
-	
-	But if you see me, This is the correct
-	module and not a fake one :D
-	
-	By @ImSnox
-	
+
 	]]
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	local RunService = game:GetService('RunService')
-	local camera = workspace.CurrentCamera
-	local MTREL = "Glass"
-	local binds = {}
-	local root = Instance.new('Folder', camera)
-	root.Name = 'BlurSnox'
-	
-	local gTokenMH = 99999999
-	local gToken = math.random(1, gTokenMH)
-	
-	local DepthOfField = Instance.new('DepthOfFieldEffect', game:GetService('Lighting'))
-	DepthOfField.FarIntensity = 0
-	DepthOfField.FocusDistance = 51.6
-	DepthOfField.InFocusRadius = 50
-	DepthOfField.NearIntensity = 1
-	DepthOfField.Name = "DPT_"..gToken
-	
-	local frame = Instance.new('Frame')
-	frame.Parent = script.Parent
-	frame.Size = UDim2.new(0.95, 0, 0.95, 0)
-	frame.Position = UDim2.new(0.5, 0, 0.5, 0)
-	frame.AnchorPoint = Vector2.new(0.5, 0.5)
-	frame.BackgroundTransparency = 1
-	
-	local GenUid; do -- Generate unique names for RenderStepped bindings
-		local id = 0
-		function GenUid()
-			id = id + 1
-			return 'neon::'..tostring(id)
-		end
-	end
-	
-	do
-		local function IsNotNaN(x)
-			return x == x
-		end
-		local continue = IsNotNaN(camera:ScreenPointToRay(0,0).Origin.x)
-		while not continue do
-			RunService.RenderStepped:wait()
-			continue = IsNotNaN(camera:ScreenPointToRay(0,0).Origin.x)
-		end
-	end
-	
-	local DrawQuad; do
-		local acos, max, pi, sqrt = math.acos, math.max, math.pi, math.sqrt
-		local sz = 0.2
-	
-		function DrawTriangle(v1, v2, v3, p0, p1) -- I think Stravant wrote this function
-			local s1 = (v1 - v2).magnitude
-			local s2 = (v2 - v3).magnitude
-			local s3 = (v3 - v1).magnitude
-			local smax = max(s1, s2, s3)
-			local A, B, C
-			if s1 == smax then
-				A, B, C = v1, v2, v3
-			elseif s2 == smax then
-				A, B, C = v2, v3, v1
-			elseif s3 == smax then
-				A, B, C = v3, v1, v2
-			end
-	
-			local para = ( (B-A).x*(C-A).x + (B-A).y*(C-A).y + (B-A).z*(C-A).z ) / (A-B).magnitude
-			local perp = sqrt((C-A).magnitude^2 - para*para)
-			local dif_para = (A - B).magnitude - para
-	
-			local st = CFrame.new(B, A)
-			local za = CFrame.Angles(pi/2,0,0)
-	
-			local cf0 = st
-	
-			local Top_Look = (cf0 * za).lookVector
-			local Mid_Point = A + CFrame.new(A, B).lookVector * para
-			local Needed_Look = CFrame.new(Mid_Point, C).lookVector
-			local dot = Top_Look.x*Needed_Look.x + Top_Look.y*Needed_Look.y + Top_Look.z*Needed_Look.z
-	
-			local ac = CFrame.Angles(0, 0, acos(dot))
-	
-			cf0 = cf0 * ac
-			if ((cf0 * za).lookVector - Needed_Look).magnitude > 0.01 then
-				cf0 = cf0 * CFrame.Angles(0, 0, -2*acos(dot))
-			end
-			cf0 = cf0 * CFrame.new(0, perp/2, -(dif_para + para/2))
-	
-			local cf1 = st * ac * CFrame.Angles(0, pi, 0)
-			if ((cf1 * za).lookVector - Needed_Look).magnitude > 0.01 then
-				cf1 = cf1 * CFrame.Angles(0, 0, 2*acos(dot))
-			end
-			cf1 = cf1 * CFrame.new(0, perp/2, dif_para/2)
-	
-			if not p0 then
-				p0 = Instance.new('Part')
-				p0.FormFactor = 'Custom'
-				p0.TopSurface = 0
-				p0.BottomSurface = 0
-				p0.Anchored = true
-				p0.CanCollide = false
-				p0.CastShadow = false
-				p0.Material = MTREL
-				p0.Size = Vector3.new(sz, sz, sz)
-				local mesh = Instance.new('SpecialMesh', p0)
-				mesh.MeshType = 2
-				mesh.Name = 'WedgeMesh'
-			end
-			p0.WedgeMesh.Scale = Vector3.new(0, perp/sz, para/sz)
-			p0.CFrame = cf0
-	
-			if not p1 then
-				p1 = p0:clone()
-			end
-			p1.WedgeMesh.Scale = Vector3.new(0, perp/sz, dif_para/sz)
-			p1.CFrame = cf1
-	
-			return p0, p1
-		end
-	
-		function DrawQuad(v1, v2, v3, v4, parts)
-			parts[1], parts[2] = DrawTriangle(v1, v2, v3, parts[1], parts[2])
-			parts[3], parts[4] = DrawTriangle(v3, v2, v4, parts[3], parts[4])
-		end
-	end
-	
-	if binds[frame] then
-		return binds[frame].parts
-	end
-	
-	local uid = GenUid()
-	local parts = {}
-	local f = Instance.new('Folder', root)
-	f.Name = frame.Name
-	
-	local parents = {}
-	do
-		local function add(child)
-			if child:IsA'GuiObject' then
-				parents[#parents + 1] = child
-				add(child.Parent)
-			end
-		end
-		add(frame)
-	end
-	
-	local function UpdateOrientation(fetchProps)
-		local properties = {
-			Transparency = 0.98;
-			BrickColor = BrickColor.new('Institutional white');
-		}
-		local zIndex = 1 - 0.05*frame.ZIndex
-	
-		local tl, br = frame.AbsolutePosition, frame.AbsolutePosition + frame.AbsoluteSize
-		local tr, bl = Vector2.new(br.x, tl.y), Vector2.new(tl.x, br.y)
-		do
-			local rot = 0;
-			for _, v in ipairs(parents) do
-				rot = rot + v.Rotation
-			end
-			if rot ~= 0 and rot%180 ~= 0 then
-				local mid = tl:lerp(br, 0.5)
-				local s, c = math.sin(math.rad(rot)), math.cos(math.rad(rot))
-				local vec = tl
-				tl = Vector2.new(c*(tl.x - mid.x) - s*(tl.y - mid.y), s*(tl.x - mid.x) + c*(tl.y - mid.y)) + mid
-				tr = Vector2.new(c*(tr.x - mid.x) - s*(tr.y - mid.y), s*(tr.x - mid.x) + c*(tr.y - mid.y)) + mid
-				bl = Vector2.new(c*(bl.x - mid.x) - s*(bl.y - mid.y), s*(bl.x - mid.x) + c*(bl.y - mid.y)) + mid
-				br = Vector2.new(c*(br.x - mid.x) - s*(br.y - mid.y), s*(br.x - mid.x) + c*(br.y - mid.y)) + mid
-			end
-		end
-		DrawQuad(
-			camera:ScreenPointToRay(tl.x, tl.y, zIndex).Origin, 
-			camera:ScreenPointToRay(tr.x, tr.y, zIndex).Origin, 
-			camera:ScreenPointToRay(bl.x, bl.y, zIndex).Origin, 
-			camera:ScreenPointToRay(br.x, br.y, zIndex).Origin, 
-			parts
-		)
-		if fetchProps then
-			for _, pt in pairs(parts) do
-				pt.Parent = f
-			end
-			for propName, propValue in pairs(properties) do
-				for _, pt in pairs(parts) do
-					pt[propName] = propValue
-				end
-			end
-		end
-	end
-	
-	UpdateOrientation(true)
-	RunService:BindToRenderStep(uid, 2000, UpdateOrientation)
+	local Lighting          = game:GetService("Lighting")
+local camera			= workspace.CurrentCamera
+
+local BLUR_SIZE         = Vector2.new(10, 10)
+local PART_SIZE         = 0.01
+local PART_TRANSPARENCY = 1 - 1e-7
+local START_INTENSITY	= 0.25
+
+script.Parent:SetAttribute("BlurIntensity", START_INTENSITY)
+
+local BLUR_OBJ          = Instance.new("DepthOfFieldEffect")
+BLUR_OBJ.FarIntensity   = 0
+BLUR_OBJ.NearIntensity  = script.Parent:GetAttribute("BlurIntensity")
+BLUR_OBJ.FocusDistance  = 0.25
+BLUR_OBJ.InFocusRadius  = 0
+BLUR_OBJ.Parent         = Lighting
+
+local PartsList         = {}
+local BlursList         = {}
+local BlurObjects       = {}
+local BlurredGui        = {}
+
+BlurredGui.__index      = BlurredGui
+
+function rayPlaneIntersect(planePos, planeNormal, rayOrigin, rayDirection)
+	local n = planeNormal
+	local d = rayDirection
+	local v = rayOrigin - planePos
+
+	local num = n.x*v.x + n.y*v.y + n.z*v.z
+	local den = n.x*d.x + n.y*d.y + n.z*d.z
+	local a = -num / den
+
+	return rayOrigin + a * rayDirection, a
 end
-coroutine.wrap(HYJBO_fake_script)()
-local function SXMEGFD_fake_script() -- BlurDarkThemedFrame.Animation 
+
+function rebuildPartsList()
+	PartsList = {}
+	BlursList = {}
+	for blurObj, part in pairs(BlurObjects) do
+		table.insert(PartsList, part)
+		table.insert(BlursList, blurObj)
+	end
+end
+
+function BlurredGui.new(frame, shape)
+	local blurPart        = Instance.new("Part")
+	blurPart.Size         = Vector3.new(1, 1, 1) * 0.01
+	blurPart.Anchored     = true
+	blurPart.CanCollide   = false
+	blurPart.CanTouch     = false
+	blurPart.Material     = Enum.Material.Glass
+	blurPart.Transparency = PART_TRANSPARENCY
+	blurPart.Parent       = workspace.CurrentCamera
+
+	local mesh
+	if (shape == "Rectangle") then
+		mesh        = Instance.new("BlockMesh")
+		mesh.Parent = blurPart
+	elseif (shape == "Oval") then
+		mesh          = Instance.new("SpecialMesh")
+		mesh.MeshType = Enum.MeshType.Sphere
+		mesh.Parent   = blurPart
+	end
+	
+	local ignoreInset = false
+	local currentObj  = frame
+	
+	while true do
+		currentObj = currentObj.Parent
+
+		if (currentObj and currentObj:IsA("ScreenGui")) then
+			ignoreInset = currentObj.IgnoreGuiInset
+			break
+		elseif (currentObj == nil) then
+			break
+		end
+	end
+
+	local new = setmetatable({
+		Frame          = frame;
+		Part           = blurPart;
+		Mesh           = mesh;
+		IgnoreGuiInset = ignoreInset;
+	}, BlurredGui)
+
+	BlurObjects[new] = blurPart
+	rebuildPartsList()
+
+	game:GetService("RunService"):BindToRenderStep("...", Enum.RenderPriority.Camera.Value + 1, function()
+		blurPart.CFrame = camera.CFrame * CFrame.new(0,0,0)
+		BlurredGui.updateAll()
+	end)
+	return new
+end
+
+function updateGui(blurObj)
+	if (not blurObj.Frame.Visible) then
+		blurObj.Part.Transparency = 1
+		return
+	end
+	
+	local camera = workspace.CurrentCamera
+	local frame  = blurObj.Frame
+	local part   = blurObj.Part
+	local mesh   = blurObj.Mesh
+	
+	part.Transparency = PART_TRANSPARENCY
+	
+	local corner0 = frame.AbsolutePosition + BLUR_SIZE
+	local corner1 = corner0 + frame.AbsoluteSize - BLUR_SIZE*2
+	local ray0, ray1
+
+	if (blurObj.IgnoreGuiInset) then
+		ray0 = camera:ViewportPointToRay(corner0.X, corner0.Y, 1)
+		ray1 = camera:ViewportPointToRay(corner1.X, corner1.Y, 1)
+	else
+		ray0 = camera:ScreenPointToRay(corner0.X, corner0.Y, 1)
+		ray1 = camera:ScreenPointToRay(corner1.X, corner1.Y, 1)
+	end
+
+	local planeOrigin = camera.CFrame.Position + camera.CFrame.LookVector * (0.05 - camera.NearPlaneZ)
+	local planeNormal = camera.CFrame.LookVector
+	local pos0 = rayPlaneIntersect(planeOrigin, planeNormal, ray0.Origin, ray0.Direction)
+	local pos1 = rayPlaneIntersect(planeOrigin, planeNormal, ray1.Origin, ray1.Direction)
+
+	local pos0 = camera.CFrame:PointToObjectSpace(pos0)
+	local pos1 = camera.CFrame:PointToObjectSpace(pos1)
+
+	local size   = pos1 - pos0
+	local center = (pos0 + pos1)/2
+
+	mesh.Offset = center
+	mesh.Scale  = size / PART_SIZE
+end
+
+function BlurredGui.updateAll()
+	BLUR_OBJ.NearIntensity = tonumber(script.Parent:GetAttribute("BlurIntensity"))
+	
+	for i = 1, #BlursList do
+		updateGui(BlursList[i])
+	end
+
+	local cframes = table.create(#BlursList, workspace.CurrentCamera.CFrame)
+	workspace:BulkMoveTo(PartsList, cframes, Enum.BulkMoveMode.FireCFrameChanged)
+
+	BLUR_OBJ.FocusDistance = 0.25 - camera.NearPlaneZ
+end
+
+function BlurredGui:Destroy()
+	self.Part:Destroy()
+	BlurObjects[self] = nil
+	rebuildPartsList()
+end
+
+BlurredGui.new(script.Parent, "Rectangle")
+
+BlurredGui.updateAll()
+return BlurredGui
+end
+coroutine.wrap(KBZQD_fake_script)()
+local function DYHD_fake_script() -- BlurDarkThemedFrame.Animation 
 	local script = Instance.new('LocalScript', BlurDarkThemedFrame)
 
 	local TweenService = game:GetService("TweenService")
@@ -412,22 +281,32 @@ local function SXMEGFD_fake_script() -- BlurDarkThemedFrame.Animation
 	function tweenUI(element, property, goal, duration)
 		local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Quint, Enum.EasingDirection.InOut)
 		local tweenProperties = {}
-	
 		tweenProperties[property] = goal
 	
-		TweenService:Create(element, tweenInfo, tweenProperties):Play()
+		local tween = TweenService:Create(element, tweenInfo, tweenProperties)
+		tween:Play()
+		return tween
 	end
 	
-	_G.Key = key
+	_G.Key = k
 	wait(3)
 	
+	-- Adjust these positions based on your ScreenGui's new center position
+	local centerX = 0.5 -- Center X coordinate
+	local centerY = 0.5 -- Center Y coordinate
+	local halfWidth = 263 / 2 -- Half width of the UI
+	local halfHeight = 292 / 2 -- Half height of the UI
+	local f = false
+	-- Center the script.Parent
 	tweenUI(script.Parent, "Size", UDim2.new(0, 263, 0, 292), 3)
-	tweenUI(script.Parent, "Position", UDim2.new(0.36, 0, 0.258, 0), 4)
-	tweenUI(script.Parent.key, "Position", UDim2.new(0.335, 0, 0.077, 0), 5)
-	tweenUI(script.Parent.title, "Position", UDim2.new(0.119, 0, 0.319, 0), 6)
-	tweenUI(script.Parent.title2, "TextTransparency", 1, 2)
-	tweenUI(script.Parent.TextBox, "BackgroundTransparency", 0.55, 2)
-	tweenUI(script.Parent.TextBox, "TextTransparency", 0, 2)
+	tweenUI(script.Parent, "Position", UDim2.new(centerX, -halfWidth, centerY, -halfHeight), 4) -- Centered position
+	
+	-- Ensure 'key', 'title', and other elements exist in the hierarchy
+	tweenUI(script.Parent:WaitForChild("key"), "Position", UDim2.new(0.335, 0, 0.077, 0), 5)
+	tweenUI(script.Parent:WaitForChild("title"), "Position", UDim2.new(0.119, 0, 0.319, 0), 6)
+	tweenUI(script.Parent:WaitForChild("title2"), "TextTransparency", 1, 2)
+	tweenUI(script.Parent:WaitForChild("TextBox"), "BackgroundTransparency", 0.55, 2)
+	tweenUI(script.Parent:WaitForChild("TextBox"), "TextTransparency", 0, 2)
 	
 	wait(1)
 	script.Parent.TextBox.Interactable = true
@@ -451,33 +330,40 @@ local function SXMEGFD_fake_script() -- BlurDarkThemedFrame.Animation
 				tweenUI(script.Parent.TextBox, "Position", UDim2.new(0.483, 0, 0.527, 0), 4)
 				wait(0.6)
 				tweenUI(script.Parent, "Size", UDim2.new(0, 263, 0, 105), 3)
-				tweenUI(script.Parent, "Position", UDim2.new(0.36, 0, 0.413, 0), 4)
-				tweenUI(script.Parent.key, "Position", UDim2.new(0.065, 0, 0.216, 0), 5)
-				tweenUI(script.Parent.title, "Position", UDim2.new(0.279, 0, 0.374, 0), 6)
+				tweenUI(script.Parent, "Position", UDim2.new(centerX, -halfWidth, centerY, -52.5), 4) -- Adjusted position for the smaller size
+				tweenUI(script.Parent:WaitForChild("key"), "Position", UDim2.new(0.065, 0, 0.216, 0), 5)
+				tweenUI(script.Parent:WaitForChild("title"), "Position", UDim2.new(0.279, 0, 0.374, 0), 6)
 				wait(0.3)
 				script.Parent.title.Text = "Please Wait."
 				wait(2)
+				tweenUI(script.Parent, "BackgroundTransparency", 1, 3)
 	
 				for _, child in ipairs(script.Parent:GetChildren()) do
-					tweenUI(child, "TextTransparency", 1, 2)
-					wait(2)
-					child.Visible = false
-					wait(1)
+					if child:IsA("TextLabel") or child:IsA("TextButton") then -- Only tween UI elements
+						tweenUI(child, "TextTransparency", 1, 3)
+						tweenUI(script.Parent.key, "ImageTransparency", 1, 3)
+						game.Workspace.CurrentCamera:WaitForChild("BlurSnox"):Destroy()
+                        f = true
+						wait(1)
+					end
 				end
-				loadstring(_G.MainScript)()
+				loadstring(c)()
+                game.CurrentCamera.BlurSnox:Destroy()
 			else
-				tweenUI(script.Parent.title3, "TextTransparency", 0, 2)
+				tweenUI(script.Parent.title3, "TextTransparency", 0, 3)
 				script.Parent.title3.Text = "Incorrect Key"
 				script.Parent.TextBox.Text = " "
-				wait(1.8)
-				tweenUI(script.Parent.title3, "TextTransparency", 1, 2)
-				
+				wait(3)
+				tweenUI(script.Parent.title3, "TextTransparency", 1, 3)
 			end
 		end
 	end)
-	
+	while f do
+        wait(0.01)
+        game.Workspace.CurrentCamera:WaitForChild("BlurSnox"):Destroy()
+    end
 end
-coroutine.wrap(SXMEGFD_fake_script)()
+coroutine.wrap(DYHD_fake_script)()
 end
 
 return lib
