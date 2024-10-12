@@ -464,7 +464,7 @@ local function SXMEGFD_fake_script() -- BlurDarkThemedFrame.Animation
 					child.Visible = false
 					wait(1)
 				end
-				loadstring(callback)()
+				loadstring(_G.MainScript)()
 			else
 				tweenUI(script.Parent.title3, "TextTransparency", 0, 2)
 				script.Parent.title3.Text = "Incorrect Key"
