@@ -14,7 +14,7 @@ local UICorner_2 = Instance.new("UICorner")
 local title3 = Instance.new("TextLabel")
 
 --Properties:
-function lib:Createkeysys(key, callback)
+function lib:Createkeysys(ekey)
 CleanGui.Name = "CleanGui"
 CleanGui.Parent = game:GetService("Players").LocalPlayer.PlayerGui
 CleanGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
