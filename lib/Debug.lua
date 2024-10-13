@@ -1,68 +1,45 @@
 local debug = {}
-local upvalueRegistry = {}
-local debugLog = {}
+local upvaluesRegistry = {}
 
-local function logDebug(message)
-    table.insert(debugLog, message)
-    print("[DEBUG] " .. message)
-end
+function debug.getupvalue(func, index)
+    if type(func) ~= "function" then
+        error("Argument must be a function")
+    end
 
-local function getUpvaluePairs(fn)
-    logDebug("Retrieving upvalues for function: " .. tostring(fn))
     local upvalues = {}
-    local i = 1
+    local function captureUpvalues()
+        local dummy = 1
+        upvalues[1] = dummy
+        return function() end
+    end
 
-    while true do
-        local name = "upvalue" .. i
-        local value = upvalueRegistry[fn][name]
-        if not value then break end
-        logDebug("Found upvalue: " .. tostring(name) .. " = " .. tostring(value))
-        table.insert(upvalues, {name, value})
-        i = i + 1
+    local originalFunc = func
+    func = captureUpvalues()
+    originalFunc()
+
+    for i = 1, #upvalues do
+        upvalues[i] = upvalues[i]
+    end
+
+    if index then
+        return upvalues[index]
     end
 
     return upvalues
 end
 
-function debug.getupvalues(modulePath, funcName)
-    logDebug("Requiring module: " .. tostring(modulePath))
-    local status, module = pcall(require, modulePath)
-    if not status then
-        error("Failed to require module: " .. tostring(modulePath))
+function debug.setupvalues(func, upvalues)
+    if type(func) ~= "function" then
+        error("Argument must be a function")
     end
-
-    local originalFn = module[funcName]
-    if not originalFn or type(originalFn) ~= "function" then
-        error("Function " .. tostring(funcName) .. " not found in module.")
-    end
-
-    if not upvalueRegistry[originalFn] then
-        upvalueRegistry[originalFn] = {}
-    end
-
-    local wrapper = function(...)
-        return originalFn(...)
-    end
-
-    setmetatable(wrapper, {
-        __index = function(t, key)
-            return upvalueRegistry[originalFn][key] or rawget(t, key)
-        end,
-        __newindex = function(t, key, value)
-            upvalueRegistry[originalFn][key] = value
-            rawset(t, key, value)
-        end,
-    })
-
-    return getUpvaluePairs(originalFn)
+    upvaluesRegistry[func] = upvalues
 end
 
-function debug.wrap(fn)
-    return debug.getupvalues(fn)
-end
-
-function debug.setup(func)
-    return debug.wrap(func)
+function debug.getupvalues(func)
+    if type(func) ~= "function" then
+        error("Argument must be a function")
+    end
+    return upvaluesRegistry[func] or {}
 end
 
 return debug
