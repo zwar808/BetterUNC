@@ -1,55 +1,68 @@
 local debug = {}
+local upvalueRegistry = {}
+local debugLog = {}
 
-local upvaluesRegistry = {}
+local function logDebug(message)
+    table.insert(debugLog, message)
+    print("[DEBUG] " .. message)
+end
 
-function debug.getupvalue(modulePath, funcName, index)
+local function getUpvaluePairs(fn)
+    logDebug("Retrieving upvalues for function: " .. tostring(fn))
+    local upvalues = {}
+    local i = 1
+
+    while true do
+        local name = "upvalue" .. i
+        local value = upvalueRegistry[fn][name]
+        if not value then break end
+        logDebug("Found upvalue: " .. tostring(name) .. " = " .. tostring(value))
+        table.insert(upvalues, {name, value})
+        i = i + 1
+    end
+
+    return upvalues
+end
+
+function debug.getupvalues(modulePath, funcName)
+    logDebug("Requiring module: " .. tostring(modulePath))
     local status, module = pcall(require, modulePath)
     if not status then
         error("Failed to require module: " .. tostring(modulePath))
     end
 
-    local func = module[funcName]
-    if not func or type(func) ~= "function" then
-        error("The function " .. tostring(funcName) .. " is not valid in the required module")
+    local originalFn = module[funcName]
+    if not originalFn or type(originalFn) ~= "function" then
+        error("Function " .. tostring(funcName) .. " not found in module.")
     end
 
-    local upvalues = debug.getupvalues(func)
-    if index and index > 0 and index <= #upvalues then
-        return upvalues[index]
+    if not upvalueRegistry[originalFn] then
+        upvalueRegistry[originalFn] = {}
     end
-    error("Invalid index or upvalue does not exist")
+
+    local wrapper = function(...)
+        return originalFn(...)
+    end
+
+    setmetatable(wrapper, {
+        __index = function(t, key)
+            return upvalueRegistry[originalFn][key] or rawget(t, key)
+        end,
+        __newindex = function(t, key, value)
+            upvalueRegistry[originalFn][key] = value
+            rawset(t, key, value)
+        end,
+    })
+
+    return getUpvaluePairs(originalFn)
 end
 
-function debug.setupvalues(func, upvalues)
-    if type(func) ~= "function" then
-        error("Argument must be a function")
-    end
-    upvaluesRegistry[func] = upvalues
+function debug.wrap(fn)
+    return debug.getupvalues(fn)
 end
 
-function debug.getupvalues(func)
-    if type(func) ~= "function" then
-        error("Argument must be a function")
-    end
-    return upvaluesRegistry[func] or {}
-end
-
-function debug.getupvalue3(modulePath, funcName, index)
-    local status, module = pcall(require, modulePath)
-    if not status then
-        error("Failed to require module: " .. tostring(modulePath))
-    end
-
-    local func = module[funcName]
-    if not func or type(func) ~= "function" then
-        error("The function " .. tostring(funcName) .. " is not valid in the required module")
-    end
-
-    local upvalues = debug.getupvalues(func)
-    if index and index > 0 and index <= #upvalues then
-        return upvalues[index]
-    end
-    error("Invalid index or upvalue does not exist")
+function debug.setup(func)
+    return debug.wrap(func)
 end
 
 return debug
