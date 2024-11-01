@@ -19,7 +19,7 @@ local function loadModule(modulePath)
     return result
 end
 
-local function require(modulePath)
+function require(modulePath: ModuleScript)
     if modules[modulePath] then
         return modules[modulePath]
     end
@@ -29,4 +29,23 @@ local function require(modulePath)
     return module
 end
 
+function byte_require(ms: ModuleScript)
+ if ms and ms:IsDescendantOf(game) then
+        return loadstring("local script = game."..ms:GetFullName().."\n\n\n"..ms.Source)()
+    elseif ms then
+        return loadstring(ms.Source)()
+    else
+        return nil
+    end
+end
+
+function fast_require(msl: ModuleScript)
+    return loadstring(msl.Source)
+end
+
+function hexrequire(ms: ModuleScript)
+    local x = {{0x2}}
+    x.s = x[1]
+    return x.s .. " not finished"
+end
 return require
