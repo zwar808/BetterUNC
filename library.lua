@@ -43,13 +43,14 @@ local InstructionObjects, CachedObjects = {}, {}
 local TweenTime, TweenStyle, TweenDirection = 1, Enum.EasingStyle.Sine, Enum.EasingDirection.Out
 local LastTick = tick()
 
-local function CalculateBounds(TableOfObjects)
+-- Function to calculate the bounds of the notification area
+local function CalculateBounds()
     local X, Y = 0, 0
-    for _, Object in ipairs(TableOfObjects) do
+    for _, Object in ipairs(CachedObjects) do
         X += Object.AbsoluteSize.X
         Y += Object.AbsoluteSize.Y
     end
-    return { X = X, Y = Y }
+    return Y
 end
 
 local function Update()
@@ -64,7 +65,7 @@ local function Update()
             Object[3] = Delta >= TweenTime
         end
         local NewValue = TweenService:GetValue(Object[2], TweenStyle, TweenDirection)
-        local TargetPos = UDim2.new(1, -320, 0, CalculateBounds(PreviousObjects).Y + (Padding * #PreviousObjects))
+        local TargetPos = UDim2.new(1, -320, 0, CalculateBounds() + (Padding * #PreviousObjects))
         Label.Position = Label.Position:Lerp(TargetPos, NewValue)
 
         if Object[3] then
@@ -134,7 +135,7 @@ return {
             end
             local NewLabel = Round2px()
             NewLabel.Size = UDim2.new(1, 0, 0, Y)
-            NewLabel.Position = UDim2.new(1, 20, 0, CalculateBounds(CachedObjects).Y + (Padding * #CachedObjects))
+            NewLabel.Position = UDim2.new(1, 20, 0, CalculateBounds() + (Padding * #CachedObjects))
             
             -- Add the icon if available
             if IconID then
