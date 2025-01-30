@@ -75,6 +75,7 @@ local function Update()
         end
     end
 
+    -- Remove faded-out notifications
     for _, Removed in ipairs(RemovedObjects) do
         table.remove(InstructionObjects, table.find(InstructionObjects, Removed))
     end
