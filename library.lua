@@ -55,6 +55,8 @@ end
 local function Update()
     local DeltaTime = tick() - LastTick
     local PreviousObjects = {}
+    local RemovedObjects = {}
+
     for _, Object in ipairs(InstructionObjects) do
         local Label, Delta, Done = Object[1], Object[2], Object[3]
         if not Done then
@@ -64,8 +66,18 @@ local function Update()
         local NewValue = TweenService:GetValue(Object[2], TweenStyle, TweenDirection)
         local TargetPos = UDim2.new(1, -320, 0, CalculateBounds(PreviousObjects).Y + (Padding * #PreviousObjects))
         Label.Position = Label.Position:Lerp(TargetPos, NewValue)
-        table.insert(PreviousObjects, Label)
+
+        if Object[3] then
+            table.insert(RemovedObjects, Object)
+        else
+            table.insert(PreviousObjects, Label)
+        end
     end
+
+    for _, Removed in ipairs(RemovedObjects) do
+        table.remove(InstructionObjects, table.find(InstructionObjects, Removed))
+    end
+
     CachedObjects = PreviousObjects
     LastTick = tick()
 end
@@ -112,7 +124,7 @@ end
 
 return {
     Notify = function(Properties)
-        local Title, Description, Duration, Icon = Properties.Title, Properties.Description, Properties.Duration or 5, Properties.Icon
+        local Title, Description, Duration = Properties.Title, Properties.Description, Properties.Duration or 5
         if Title or Description then
             local Y = Title and 26 or 0
             if Description then
@@ -127,19 +139,12 @@ return {
             local ProgressBar = Instance.new("Frame")
             ProgressBar.Size = UDim2.new(1, 0, 0, 4)
             ProgressBar.Position = UDim2.new(0, 0, 1, -4)
-            ProgressBar.BackgroundColor3 = Color3.fromRGB(0, 122, 255)
+            ProgressBar.BackgroundColor3 = Color3.fromRGB(0, 120, 212) -- Windows 11 blue
             ProgressBar.BorderSizePixel = 0
             ProgressBar.Parent = NewLabel
             
             TweenService:Create(ProgressBar, TweenInfo.new(Duration, TweenStyle, TweenDirection), { Size = UDim2.new(0, 0, 0, 4) }):Play()
-
-            if Icon then
-                local IconImage = Image(Icon, false)
-                IconImage.Size = UDim2.new(0, 26, 0, 26)
-                IconImage.Position = UDim2.fromOffset(10, 10)
-                IconImage.Parent = NewLabel
-            end
-
+            
             if Title then
                 local NewTitle = TitleLabel(Title)
                 NewTitle.Size = UDim2.new(1, -10, 0, 26)
