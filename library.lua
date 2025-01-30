@@ -92,7 +92,7 @@ local function TitleLabel(Text) return Label(Text, TitleSettings.Font, TitleSett
 local function DescriptionLabel(Text) return Label(Text, DescriptionSettings.Font, DescriptionSettings.Size) end
 
 local function FadeProperty(Object)
-    local Prop = { Text = "TextTransparency", Fram = "BackgroundTransparency", Imag = "ImageTransparency" }[string.sub(Object.ClassName, 1, 4)]
+    local Prop = ({Text = "TextTransparency", Fram = "BackgroundTransparency", Imag = "ImageTransparency"})[string.sub(Object.ClassName, 1, 4)]
     TweenService:Create(Object, TweenInfo.new(0.25, TweenStyle, TweenDirection), { [Prop] = 1 }):Play()
 end
 
