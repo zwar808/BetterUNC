@@ -2,7 +2,6 @@ local TweenService = game:GetService("TweenService")
 local RunService = game:GetService("RunService")
 local TextService = game:GetService("TextService")
 local Player = game:GetService("Players").LocalPlayer
-
 local NotifGui = Instance.new("ScreenGui")
 NotifGui.Name = "AkaliNotif"
 NotifGui.Parent = RunService:IsStudio() and Player.PlayerGui or game:GetService("CoreGui")
@@ -39,12 +38,9 @@ local function Shadow2px()
     return NewImage
 end
 
-local Padding = 10
-local DescriptionPadding = 10
-local InstructionObjects = {}
-local TweenTime = 1
-local TweenStyle = Enum.EasingStyle.Sine
-local TweenDirection = Enum.EasingDirection.Out
+local Padding, DescriptionPadding = 10, 10
+local InstructionObjects, CachedObjects = {}, {}
+local TweenTime, TweenStyle, TweenDirection = 1, Enum.EasingStyle.Sine, Enum.EasingDirection.Out
 local LastTick = tick()
 
 local function CalculateBounds(TableOfObjects)
@@ -53,12 +49,14 @@ local function CalculateBounds(TableOfObjects)
         X += Object.AbsoluteSize.X
         Y += Object.AbsoluteSize.Y
     end
-    return {X = X, Y = Y}
+    return { X = X, Y = Y }
 end
 
 local function Update()
     local DeltaTime = tick() - LastTick
     local PreviousObjects = {}
+    local RemovedObjects = {}
+
     for _, Object in ipairs(InstructionObjects) do
         local Label, Delta, Done = Object[1], Object[2], Object[3]
         if not Done then
@@ -68,64 +66,111 @@ local function Update()
         local NewValue = TweenService:GetValue(Object[2], TweenStyle, TweenDirection)
         local TargetPos = UDim2.new(1, -320, 0, CalculateBounds(PreviousObjects).Y + (Padding * #PreviousObjects))
         Label.Position = Label.Position:Lerp(TargetPos, NewValue)
-        table.insert(PreviousObjects, Label)
+
+        if Object[3] then
+            table.insert(RemovedObjects, Object)
+        else
+            table.insert(PreviousObjects, Label)
+        end
     end
+
+    for _, Removed in ipairs(RemovedObjects) do
+        table.remove(InstructionObjects, table.find(InstructionObjects, Removed))
+    end
+
+    CachedObjects = PreviousObjects
     LastTick = tick()
 end
 
-RunService.Heartbeat:Connect(Update)
+RunService:BindToRenderStep("UpdateList", 0, Update)
 
-local function Notify(Params)
-    local Text = Params.Text
-    local IconID = Params.IconID
+local TitleSettings, DescriptionSettings = { Font = Enum.Font.GothamSemibold, Size = 14 }, { Font = Enum.Font.Gotham, Size = 14 }
+local MaxWidth = Container.AbsoluteSize.X - Padding - DescriptionPadding
 
-    local NewNotif = Instance.new("Frame")
-    NewNotif.Size = UDim2.new(0, 300, 0, 60)
-    NewNotif.BackgroundTransparency = 1
-    NewNotif.Parent = Container
-
-    local Shadow = Shadow2px()
-    Shadow.Parent = NewNotif
-
-    local Background = Round2px()
-    Background.Parent = NewNotif
-
-    local IconArea = Instance.new("Frame")
-    IconArea.Size = UDim2.new(0, 40, 0, 40)
-    IconArea.Position = UDim2.new(0, Padding, 0, Padding)
-    IconArea.BackgroundTransparency = 1
-    IconArea.Parent = NewNotif
-
-    local Icon = Image(IconID, false)
-    Icon.Size = UDim2.fromOffset(40, 40)
-    Icon.Parent = IconArea
-
-    local Label = Instance.new("TextLabel")
-    Label.Size = UDim2.new(1, -60, 1, 0)
-    Label.Position = UDim2.new(0, 50, 0, 0)
-    Label.BackgroundTransparency = 1
+local function Label(Text, Font, Size, Button)
+    local Label = Instance.new(Button and "TextButton" or "TextLabel")
     Label.Text = Text
+    Label.Font = Font
+    Label.TextSize = Size
+    Label.BackgroundTransparency = 1
+    Label.TextXAlignment = Enum.TextXAlignment.Left
+    Label.RichText = true
     Label.TextColor3 = Color3.fromRGB(255, 255, 255)
-    Label.Font = Enum.Font.SourceSans
-    Label.TextSize = 16
-    Label.TextWrapped = true
-    Label.Parent = NewNotif
+    return Label
+end
 
-    local Bound = CalculateBounds({IconArea, Label})
-    NewNotif.Size = UDim2.new(0, Bound.X + 10, 0, Bound.Y)
+local function TitleLabel(Text) return Label(Text, TitleSettings.Font, TitleSettings.Size) end
+local function DescriptionLabel(Text) return Label(Text, DescriptionSettings.Font, DescriptionSettings.Size) end
 
-    table.insert(InstructionObjects, {NewNotif, 0, false})
+local function FadeProperty(Object)
+    local Prop = ({Text = "TextTransparency", Fram = "BackgroundTransparency", Imag = "ImageTransparency"})[string.sub(Object.ClassName, 1, 4)]
+    TweenService:Create(Object, TweenInfo.new(0.25, TweenStyle, TweenDirection), { [Prop] = 1 }):Play()
+end
 
-    return {
-        Notify = Notify
-    }
+local function ResetObjects()
+    for _, Object in ipairs(InstructionObjects) do
+        Object[2], Object[3] = 0, false
+    end
+end
+
+local function FadeOutAfter(Object, Seconds)
+    wait(Seconds)
+    FadeProperty(Object)
+    for _, SubObj in ipairs(Object:GetDescendants()) do FadeProperty(SubObj) end
+    wait(0.25)
+    table.remove(InstructionObjects, table.find(InstructionObjects, Object))
+    ResetObjects()
 end
 
 return {
-    Notify = function(Text, IconID)
-        return Notify({
-            Text = Text,
-            IconID = IconID
-        })
-    end
+    Notify = function(Properties)
+        local Title, Description, Duration, IconID = Properties.Title, Properties.Description, Properties.Duration or 5, Properties.IconID
+        if Title or Description then
+            local Y = Title and 26 or 0
+            if Description then
+                local TextSize = TextService:GetTextSize(Description, DescriptionSettings.Size, DescriptionSettings.Font, Vector2.new(0, 0))
+                for i = 1, math.ceil(TextSize.X / MaxWidth) do Y += TextSize.Y end
+                Y += 8
+            end
+            local NewLabel = Round2px()
+            NewLabel.Size = UDim2.new(1, 0, 0, Y)
+            NewLabel.Position = UDim2.new(1, 20, 0, CalculateBounds(CachedObjects).Y + (Padding * #CachedObjects))
+            
+            -- Add the icon if available
+            if IconID then
+                local Icon = Image(IconID, false)
+                Icon.Size = UDim2.new(0, 32, 0, 32)
+                Icon.Position = UDim2.new(0, 10, 0, 10)
+                Icon.Parent = NewLabel
+            end
+            
+            local ProgressBar = Instance.new("Frame")
+            ProgressBar.Size = UDim2.new(1, 0, 0, 4)
+            ProgressBar.Position = UDim2.new(0, 0, 1, -4)
+            ProgressBar.BackgroundColor3 = Color3.fromRGB(0, 120, 212) -- Windows 11 blue
+            ProgressBar.BorderSizePixel = 0
+            ProgressBar.Parent = NewLabel
+            
+            TweenService:Create(ProgressBar, TweenInfo.new(Duration, TweenStyle, TweenDirection), { Size = UDim2.new(0, 0, 0, 4) }):Play()
+            
+            if Title then
+                local NewTitle = TitleLabel(Title)
+                NewTitle.Size = UDim2.new(1, -10, 0, 26)
+                NewTitle.Position = UDim2.fromOffset(10, 0)
+                NewTitle.Parent = NewLabel
+            end
+            if Description then
+                local NewDescription = DescriptionLabel(Description)
+                NewDescription.TextWrapped = true
+                NewDescription.Size = UDim2.fromScale(1, 1) + UDim2.fromOffset(-DescriptionPadding, Title and -26 or 0)
+                NewDescription.Position = UDim2.fromOffset(10, Title and 26 or 0)
+                NewDescription.TextYAlignment = Enum.TextYAlignment[Title and "Top" or "Center"]
+                NewDescription.Parent = NewLabel
+            end
+            Shadow2px().Parent = NewLabel
+            NewLabel.Parent = Container
+            table.insert(InstructionObjects, { NewLabel, 0, false })
+            coroutine.wrap(FadeOutAfter)(NewLabel, Duration)
+        end
+    end,
 }
