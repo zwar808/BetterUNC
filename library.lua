@@ -2,7 +2,6 @@ local TweenService = game:GetService("TweenService")
 local RunService = game:GetService("RunService")
 local TextService = game:GetService("TextService")
 local Player = game:GetService("Players").LocalPlayer
-warn("BetaTestlibv1")
 local NotifGui = Instance.new("ScreenGui")
 NotifGui.Name = "AkaliNotif"
 NotifGui.Parent = RunService:IsStudio() and Player.PlayerGui or game:GetService("CoreGui")
@@ -16,13 +15,13 @@ Container.Parent = NotifGui
 
 local function Image(ID, Button)
     local NewImage = Instance.new(Button and "ImageButton" or "ImageLabel")
-    NewImage.Image = ID
+    NewImage.Image = "http://www.roblox.com/asset/?id=" .. ID
     NewImage.BackgroundTransparency = 1
     return NewImage
 end
 
 local function Round2px()
-    local NewImage = Image("http://www.roblox.com/asset/?id=5761488251")
+    local NewImage = Image("5761488251")
     NewImage.ScaleType = Enum.ScaleType.Slice
     NewImage.SliceCenter = Rect.new(2, 2, 298, 298)
     NewImage.ImageColor3 = Color3.fromRGB(30, 30, 30)
@@ -30,7 +29,7 @@ local function Round2px()
 end
 
 local function Shadow2px()
-    local NewImage = Image("http://www.roblox.com/asset/?id=5761498316")
+    local NewImage = Image("5761498316")
     NewImage.ScaleType = Enum.ScaleType.Slice
     NewImage.SliceCenter = Rect.new(17, 17, 283, 283)
     NewImage.Size = UDim2.fromScale(1, 1) + UDim2.fromOffset(30, 30)
@@ -113,7 +112,7 @@ end
 
 return {
     Notify = function(Properties)
-        local Title, Description, Duration = Properties.Title, Properties.Description, Properties.Duration or 5
+        local Title, Description, Duration, Icon = Properties.Title, Properties.Description, Properties.Duration or 5, Properties.Icon
         if Title or Description then
             local Y = Title and 26 or 0
             if Description then
@@ -128,12 +127,19 @@ return {
             local ProgressBar = Instance.new("Frame")
             ProgressBar.Size = UDim2.new(1, 0, 0, 4)
             ProgressBar.Position = UDim2.new(0, 0, 1, -4)
-            ProgressBar.BackgroundColor3 = Color3.fromRGB(255, 85, 85)
+            ProgressBar.BackgroundColor3 = Color3.fromRGB(0, 122, 255)
             ProgressBar.BorderSizePixel = 0
             ProgressBar.Parent = NewLabel
             
             TweenService:Create(ProgressBar, TweenInfo.new(Duration, TweenStyle, TweenDirection), { Size = UDim2.new(0, 0, 0, 4) }):Play()
-            
+
+            if Icon then
+                local IconImage = Image(Icon, false)
+                IconImage.Size = UDim2.new(0, 26, 0, 26)
+                IconImage.Position = UDim2.fromOffset(10, 10)
+                IconImage.Parent = NewLabel
+            end
+
             if Title then
                 local NewTitle = TitleLabel(Title)
                 NewTitle.Size = UDim2.new(1, -10, 0, 26)
