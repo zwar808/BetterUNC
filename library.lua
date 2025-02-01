@@ -7,12 +7,14 @@ x.Parent = game:GetService("ReplicatedStorage")
 x.CornerRadius = UDim.new(0,7)
 local ccc = x:Clone()
 local Player = game:GetService("Players").LocalPlayer
+
 local NotifGui = Instance.new("ScreenGui")
 NotifGui.Name = "AkaliNotif"
 NotifGui.Parent = RunService:IsStudio() and Player.PlayerGui or game:GetService("CoreGui")
+
 local Container = Instance.new("Frame")
 Container.Name = "Container"
-Container.Position = UDim2.new(1, -320, 0.5, -20)
+Container.Position = UDim2.new(1, -320, 0.5, -20) -- Change to be on the right side
 Container.Size = UDim2.new(0, 300, 0.5, 0)
 Container.BackgroundTransparency = 1
 Container.Parent = NotifGui
@@ -23,7 +25,9 @@ local InstructionObjects = {}
 local TweenTime = 1
 local TweenStyle = Enum.EasingStyle.Sine
 local TweenDirection = Enum.EasingDirection.Out
+
 local LastTick = tick()
+
 local function CalculateBounds(TableOfObjects)
     local X, Y = 0, 0
     for _, Object in ipairs(TableOfObjects) do
@@ -100,12 +104,14 @@ local PropertyTweenOut = {
     Fram = "BackgroundTransparency",
     Imag = "ImageTransparency"
 }
+
 local function FadeProperty(Object)
     local Prop = PropertyTweenOut[string.sub(Object.ClassName, 1, 4)]
     TweenService:Create(Object, TweenInfo.new(0.25, TweenStyle, TweenDirection), {
         [Prop] = 1
     }):Play()
 end
+
 local function SearchTableFor(Table, For)
     for _, v in ipairs(Table) do
         if v == For then
@@ -114,6 +120,7 @@ local function SearchTableFor(Table, For)
     end
     return false
 end
+
 local function FindIndexByDependency(Table, Dependency)
     for Index, Object in ipairs(Table) do
         if typeof(Object) == "table" then
@@ -128,12 +135,14 @@ local function FindIndexByDependency(Table, Dependency)
         end
     end
 end
+
 local function ResetObjects()
     for _, Object in ipairs(InstructionObjects) do
         Object[2] = 0
         Object[3] = false
     end
 end
+
 local function FadeOutAfter(Object, Seconds)
     wait(Seconds)
     FadeProperty(Object)
@@ -144,6 +153,7 @@ local function FadeOutAfter(Object, Seconds)
     table.remove(InstructionObjects, FindIndexByDependency(InstructionObjects, Object))
     ResetObjects()
 end
+
 local x = {
     Notify = function(Properties)
         local Properties = typeof(Properties) == "table" and Properties or {}
@@ -151,7 +161,7 @@ local x = {
         local Description = Properties.Description
         local Duration = Properties.Duration or 5
         local RGBShift = Properties.RGBShift or false
-        local Color = Properties.Color or Color3.fromRGB(30, 30, 30)
+        local Color = Properties.Color or Color3.fromRGB(30, 30, 30) 
         if Title or Description then
             local Y = Title and 26 or 0
             if Description then
@@ -161,13 +171,14 @@ local x = {
                 end
                 Y += 8
             end
+
             local NewLabel = Instance.new("Frame")
             NewLabel.Size = UDim2.new(1, 0, 0, Y)
             NewLabel.Position = UDim2.new(1, -320, 0, CalculateBounds(CachedObjects).Y + (Padding * #CachedObjects))
             NewLabel.BackgroundColor3 = Color
             NewLabel.BackgroundTransparency = 0.5
             NewLabel.Parent = Container
-			ccc.Parent = NewLabel
+	    ccc.Parent = NewLabel
             if Title then
                 local NewTitle = TitleLabel(Title)
                 NewTitle.Size = UDim2.new(1, -10, 0, 26)
@@ -195,6 +206,8 @@ local x = {
 						local newColor = Color3.fromRGB(math.random(0, 255), math.random(0, 255), math.random(0, 255))
                             local tweenInfo = TweenInfo.new(0.4, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut, -1, true)
 							  local tween = game:GetService("TweenService"):Create(ProgressBar, tweenInfo, { BackgroundColor3 = newColor })
+							  local xx = ccc:Clone()
+							  ccc.Parent = ProgressBar
 							tween:Play()
 							task.wait(0.2)
                         end
