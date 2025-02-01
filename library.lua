@@ -14,7 +14,7 @@ NotifGui.Parent = RunService:IsStudio() and Player.PlayerGui or game:GetService(
 
 local Container = Instance.new("Frame")
 Container.Name = "Container"
-Container.Position = UDim2.new(1, -320, 0.5, -20) -- Change to be on the right side
+Container.Position = UDim2.new(1, -320, 0.5, -20)
 Container.Size = UDim2.new(0, 300, 0.5, 0)
 Container.BackgroundTransparency = 1
 Container.Parent = NotifGui
@@ -27,6 +27,7 @@ local TweenStyle = Enum.EasingStyle.Sine
 local TweenDirection = Enum.EasingDirection.Out
 
 local LastTick = tick()
+
 
 local function CalculateBounds(TableOfObjects)
     local X, Y = 0, 0
@@ -154,7 +155,7 @@ local function FadeOutAfter(Object, Seconds)
     ResetObjects()
 end
 
-local x = {
+return {
     Notify = function(Properties)
         local Properties = typeof(Properties) == "table" and Properties or {}
         local Title = Properties.Title
@@ -174,17 +175,20 @@ local x = {
 
             local NewLabel = Instance.new("Frame")
             NewLabel.Size = UDim2.new(1, 0, 0, Y)
-            NewLabel.Position = UDim2.new(1, -320, 0, CalculateBounds(CachedObjects).Y + (Padding * #CachedObjects))
+            NewLabel.Position = UDim2.new(1, -320, 0, CalculateBounds(CachedObjects).Y + (Padding * #CachedObjects)) 
             NewLabel.BackgroundColor3 = Color
             NewLabel.BackgroundTransparency = 0.5
             NewLabel.Parent = Container
-	    ccc.Parent = NewLabel
+			ccc.Parent = NewLabel
+
             if Title then
                 local NewTitle = TitleLabel(Title)
                 NewTitle.Size = UDim2.new(1, -10, 0, 26)
                 NewTitle.Position = UDim2.fromOffset(10, 0)
                 NewTitle.Parent = NewLabel
             end
+
+
             if Description then
                 local NewDescription = DescriptionLabel(Description)
                 NewDescription.TextWrapped = true
@@ -193,6 +197,8 @@ local x = {
                 NewDescription.TextYAlignment = Enum.TextYAlignment[Title and "Top" or "Center"]
                 NewDescription.Parent = NewLabel
             end
+
+
             local ProgressBar = Instance.new("Frame")
             ProgressBar.Size = UDim2.new(1, 0, 0, 4)
             ProgressBar.Position = UDim2.new(0, 0, 1, -4)
@@ -215,6 +221,7 @@ local x = {
                     ShiftRGB()
                 end)()
             end
+
             TweenService:Create(ProgressBar, TweenInfo.new(Duration, TweenStyle, TweenDirection), { Size = UDim2.new(0, 0, 0, 4) }):Play()
             coroutine.wrap(FadeOutAfter)(NewLabel, Duration)
             table.insert(InstructionObjects, { NewLabel, 0, false })
