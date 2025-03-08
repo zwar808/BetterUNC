@@ -4,7 +4,7 @@ local TextService = game:GetService("TextService")
 local x = Instance.new("UICorner")
 x.Name = "CornerEdgeController"
 x.Parent = game:GetService("ReplicatedStorage")
-x.CornerRadius = UDim.new(0,7)
+x.CornerRadius = UDim.new(0,10)
 local ccc = x:Clone()
 local Player = game:GetService("Players").LocalPlayer
 
@@ -28,7 +28,6 @@ local TweenDirection = Enum.EasingDirection.Out
 
 local LastTick = tick()
 
-
 local function CalculateBounds(TableOfObjects)
     local X, Y = 0, 0
     for _, Object in ipairs(TableOfObjects) do
@@ -39,6 +38,21 @@ local function CalculateBounds(TableOfObjects)
 end
 
 local CachedObjects = {}
+
+local function FadeProperty(Object)
+    local PropertyMap = {
+        TextLabel = "TextTransparency",
+        TextButton = "TextTransparency",
+        Frame = "BackgroundTransparency",
+        ImageLabel = "ImageTransparency",
+        ImageButton = "ImageTransparency"
+    }
+    local Property = PropertyMap[Object.ClassName]
+    if Property then
+        local Tween = TweenService:Create(Object, TweenInfo.new(0.25, TweenStyle, TweenDirection), {[Property] = 1})
+        Tween:Play()
+    end
+end
 
 local function Update()
     local DeltaTime = tick() - LastTick
@@ -54,7 +68,6 @@ local function Update()
                 Object[3] = true
             end
         end
-
         local NewValue = TweenService:GetValue(Delta, TweenStyle, TweenDirection)
         local CurrentPos = Label.Position
         local PreviousBounds = CalculateBounds(PreviousObjects)
@@ -68,106 +81,28 @@ end
 
 RunService:BindToRenderStep("UpdateList", 0, Update)
 
-local TitleSettings = {
-    Font = Enum.Font.GothamSemibold,
-    Size = 14
-}
-
-local DescriptionSettings = {
-    Font = Enum.Font.Gotham,
-    Size = 14
-}
-
-local MaxWidth = (Container.AbsoluteSize.X - Padding - DescriptionPadding)
-
-local function Label(Text, Font, Size, Button)
-    local Label = Instance.new(Button and "TextButton" or "TextLabel")
-    Label.Text = Text
-    Label.Font = Font
-    Label.TextSize = Size
-    Label.BackgroundTransparency = 1
-    Label.TextXAlignment = Enum.TextXAlignment.Left
-    Label.RichText = true
-    Label.TextColor3 = Color3.fromRGB(255, 255, 255)
-    return Label
-end
-
-local function TitleLabel(Text)
-    return Label(Text, TitleSettings.Font, TitleSettings.Size)
-end
-
-local function DescriptionLabel(Text)
-    return Label(Text, DescriptionSettings.Font, DescriptionSettings.Size)
-end
-
-local PropertyTweenOut = {
-    Text = "TextTransparency",
-    Fram = "BackgroundTransparency",
-    Imag = "ImageTransparency"
-}
-
-local function FadeProperty(Object)
-    local Prop = PropertyTweenOut[string.sub(Object.ClassName, 1, 4)]
-    TweenService:Create(Object, TweenInfo.new(0.25, TweenStyle, TweenDirection), {
-        [Prop] = 1
-    }):Play()
-end
-
-local function SearchTableFor(Table, For)
-    for _, v in ipairs(Table) do
-        if v == For then
-            return true
-        end
-    end
-    return false
-end
-
-local function FindIndexByDependency(Table, Dependency)
-    for Index, Object in ipairs(Table) do
-        if typeof(Object) == "table" then
-            local Found = SearchTableFor(Object, Dependency)
-            if Found then
-                return Index
-            end
-        else
-            if Object == Dependency then
-                return Index
-            end
-        end
-    end
-end
-
-local function ResetObjects()
-    for _, Object in ipairs(InstructionObjects) do
-        Object[2] = 0
-        Object[3] = false
-    end
-end
-
 local function FadeOutAfter(Object, Seconds)
-    wait(Seconds)
+    task.wait(Seconds)
     FadeProperty(Object)
     for _, SubObj in ipairs(Object:GetDescendants()) do
         FadeProperty(SubObj)
     end
-    wait(0.25)
-    table.remove(InstructionObjects, FindIndexByDependency(InstructionObjects, Object))
-    ResetObjects()
+    task.wait(0.25)
+    table.remove(InstructionObjects, table.find(InstructionObjects, Object))
 end
 
 return {
     Notify = function(Properties)
-        local Properties = typeof(Properties) == "table" and Properties or {}
         local Title = Properties.Title
         local Description = Properties.Description
         local Duration = Properties.Duration or 5
-        local RGBShift = Properties.RGBShift or false
-        local Color = Properties.Color or Color3.fromRGB(30, 30, 30) 
+        local Color = Properties.Color or Color3.fromRGB(30, 30, 30)
+        
         if Title or Description then
             local Y = Title and 26 or 0
             if Description then
-                local TextSize = TextService:GetTextSize(Description, DescriptionSettings.Size, DescriptionSettings.Font, Vector2.new(0, 0))
-                for i = 1, math.ceil(TextSize.X / MaxWidth) do
+                local TextSize = TextService:GetTextSize(Description, 14, Enum.Font.Gotham, Vector2.new(0, 0))
+                for i = 1, math.ceil(TextSize.X / (Container.AbsoluteSize.X - Padding - DescriptionPadding)) do
                     Y += TextSize.Y
                 end
                 Y += 8
@@ -175,29 +110,36 @@ return {
 
             local NewLabel = Instance.new("Frame")
             NewLabel.Size = UDim2.new(1, 0, 0, Y)
-            NewLabel.Position = UDim2.new(1, -320, 0, CalculateBounds(CachedObjects).Y + (Padding * #CachedObjects)) 
+            NewLabel.Position = UDim2.new(1, -320, 0, CalculateBounds(CachedObjects).Y + (Padding * #CachedObjects))
             NewLabel.BackgroundColor3 = Color
             NewLabel.BackgroundTransparency = 0.5
             NewLabel.Parent = Container
-			ccc.Parent = NewLabel
+            ccc.Parent = NewLabel
 
             if Title then
-                local NewTitle = TitleLabel(Title)
+                local NewTitle = Instance.new("TextLabel")
+                NewTitle.Text = Title
+                NewTitle.Font = Enum.Font.GothamSemibold
+                NewTitle.TextSize = 14
+                NewTitle.BackgroundTransparency = 1
+                NewTitle.TextColor3 = Color3.new(1, 1, 1)
                 NewTitle.Size = UDim2.new(1, -10, 0, 26)
                 NewTitle.Position = UDim2.fromOffset(10, 0)
                 NewTitle.Parent = NewLabel
             end
 
-
             if Description then
-                local NewDescription = DescriptionLabel(Description)
+                local NewDescription = Instance.new("TextLabel")
+                NewDescription.Text = Description
+                NewDescription.Font = Enum.Font.Gotham
+                NewDescription.TextSize = 14
+                NewDescription.BackgroundTransparency = 1
                 NewDescription.TextWrapped = true
                 NewDescription.Size = UDim2.fromScale(1, 1) + UDim2.fromOffset(-DescriptionPadding, Title and -26 or 0)
                 NewDescription.Position = UDim2.fromOffset(10, Title and 26 or 0)
-                NewDescription.TextYAlignment = Enum.TextYAlignment[Title and "Top" or "Center"]
+                NewDescription.TextColor3 = Color3.new(1, 1, 1)
                 NewDescription.Parent = NewLabel
             end
-
 
             local ProgressBar = Instance.new("Frame")
             ProgressBar.Size = UDim2.new(1, 0, 0, 4)
@@ -205,26 +147,10 @@ return {
             ProgressBar.BackgroundColor3 = Color
             ProgressBar.BorderSizePixel = 0
             ProgressBar.Parent = NewLabel
-            if RGBShift then
-                coroutine.wrap(function()
-                    local function ShiftRGB()
-                        while true do
-						local newColor = Color3.fromRGB(math.random(0, 255), math.random(0, 255), math.random(0, 255))
-                            local tweenInfo = TweenInfo.new(0.4, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut, -1, true)
-							  local tween = game:GetService("TweenService"):Create(ProgressBar, tweenInfo, { BackgroundColor3 = newColor })
-							  local xx = ccc:Clone()
-							  ccc.Parent = ProgressBar
-							tween:Play()
-							task.wait(0.2)
-                        end
-                    end
-                    ShiftRGB()
-                end)()
-            end
 
-            TweenService:Create(ProgressBar, TweenInfo.new(Duration, TweenStyle, TweenDirection), { Size = UDim2.new(0, 0, 0, 4) }):Play()
+            TweenService:Create(ProgressBar, TweenInfo.new(Duration, TweenStyle, TweenDirection), {Size = UDim2.new(0, 0, 0, 4)}):Play()
             coroutine.wrap(FadeOutAfter)(NewLabel, Duration)
-            table.insert(InstructionObjects, { NewLabel, 0, false })
+            table.insert(InstructionObjects, {NewLabel, 0, false})
         end
     end,
 }
